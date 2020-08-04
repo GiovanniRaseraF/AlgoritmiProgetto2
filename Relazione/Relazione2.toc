@@ -1,0 +1,10 @@
+\babel@toc {italian}{}
+\babel@toc {italian}{}
+\contentsline {section}{\numberline {1}Alberi binari di ricerca semplici}{2}%
+\contentsline {subsection}{\numberline {1.1}Introduzione}{2}%
+\contentsline {subsection}{\numberline {1.2}Analisi e calcolo tempi}{3}%
+\contentsline {section}{\numberline {2}Alberi binari di ricerca di tipo AVL}{4}%
+\contentsline {section}{\numberline {3}Alberi binari di ricerca di tipo Red-Black}{5}%
+\contentsline {subsection}{\numberline {3.1}Introduzione}{5}%
+\contentsline {subsection}{\numberline {3.2}Analisi e calcolo tempi}{6}%
+\contentsline {section}{\numberline {4}Algortimo per il calcolo dei tempi}{7}%
