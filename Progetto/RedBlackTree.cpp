@@ -328,6 +328,9 @@ public:
             FORTUNATO, QUASI_FORTUNATO, SFORTUNATO
         };
         typedef enum  typeCase typeCase;
+        //Solo per debug non viene utilizzata
+        //Nel momento di dover runnare il codice siccome
+        //é solo grafica
         auto print = [](typeCase tc) {
             switch (tc) {
             case typeCase::FORTUNATO:
