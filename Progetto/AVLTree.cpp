@@ -24,7 +24,7 @@ public:
     node* father;
     node* left;
     node* right;
-    RBcolor color;
+    int height;
 
     //Costruttore del nodo
     node(int key, string val) {
@@ -33,7 +33,7 @@ public:
         this->father = nullptr;
         this->left = nullptr;
         this->right = nullptr;
-        this->color = RBcolor::BLACK;
+        this->height = 1;
     }
 
     ~node() {}
@@ -42,6 +42,65 @@ public:
     static node* create(int key, string val) {
         return new node(key, val);
     }
+
+    /*
+    EFFETTO:    Ritorna l'altezza dell'albero
+	*/
+    static int getHeight(node* root){
+        if(root == nullptr) return 0;
+        return root->height;
+    }
+
+    //Rotazioni
+    //Destra
+    /*
+    EFFETTO:    Esegue la rotazione verso destra
+    PRE:        Devono essere presenti dei nodi
+                root non deve essere nullptr
+    */
+    node* destra(node* root)  {  
+        if(root == nullptr) return nullptr
+
+        node *x = root->left, T2 = x->right;  
+        //Esecuzione della Rotazione
+        x->right = root;  root->left = T2;  
+        //A questo punto devo aggiornare le atezze  
+        root->height = max(height(root->left), height(root->right)) + 1;  
+        x->height = max(height(x->left), height(x->right)) + 1;  
+        //Alla fine rotorno il nodo che ora diventa root 
+        return x;  
+    } 
+
+    //Sinistra
+    /*
+    EFFETTO:    Esegue la rotazione verso sinistra
+    PRE:        Devono essere presenti dei nodi
+                root non deve essere nullptr
+    */
+    node* sinistra(node* root)  {  
+        if(root == nullptr) return nullptr
+
+        node *y = root->right, T2 = y->left;  
+        //Esecuzione della Rotazione
+        y->left = root;  root->right = T2;  
+        //A questo punto devo aggiornare le atezze  
+        root->height = max(height(root->left), height(root->right)) + 1;  
+        y->height = max(height(y->left), height(y->right)) + 1;  
+        //Alla fine rotorno il nodo che ora diventa root 
+        return x;  
+    } 
+
+    /*
+    EFFETTO:    Ritorna il fattore di bilanciamento
+    RETURN:     0 se la root è null opure sono perfettamente bilaniciati
+                1 se c'e piu peso a sinista
+                - 1 se c'e piu peso a destra
+    */
+    int valoreBilanciamento(node* root){
+        if(root == nullptr) return 0;
+        return getHeight(root->left) - getHeight(root->right);
+    }
+    
 };
 
 
