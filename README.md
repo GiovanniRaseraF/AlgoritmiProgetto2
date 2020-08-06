@@ -5,5 +5,5 @@ Parte due, creazione di alberi
 - AVL Tree
 
 # TODO:
-- AVL Tree
 - Calcolatore dei tempi
+- Finire Relazione
