@@ -58,7 +58,7 @@ public:
     PRE:        Devono essere presenti dei nodi
                 root non deve essere nullptr
     */
-    node* destra(node* root)  {  
+    static node* destra(node* root)  {  
         if(root == nullptr) return nullptr;
 
         node* x = root->left, *T2 = x->right;  
@@ -77,7 +77,7 @@ public:
     PRE:        Devono essere presenti dei nodi
                 root non deve essere nullptr
     */
-    node* sinistra(node* root)  {  
+    static node* sinistra(node* root)  {  
         if(root == nullptr) return nullptr;
 
         node *y = root->right, *T2 = y->left;  
@@ -96,7 +96,7 @@ public:
                 1 se c'e piu peso a sinista
                 - 1 se c'e piu peso a destra
     */
-    int valoreBilanciamento(node* root){
+    static int valoreBilanciamento(node* root){
         if(root == nullptr) return 0;
         return getheight(root->left) - getheight(root->right);
     }
@@ -105,7 +105,7 @@ public:
     EFFETTO:    Inserimento di un nodo nell'albero
 
     */
-    node* insert(node* root, int key, string val){
+    static node* insert(node* root, int key, string val){
         //Caso Base
         if (root == nullptr)  return create(key, val);  
         //Vaso di andare verso sinistra o verso desta
@@ -188,6 +188,53 @@ public:
 			show(root->right);
 		}
 	}
+  
+    static node* remove(node* root, int key)  {  
+        //Caso Base
+        if (root == nullptr)  return root;  
+        //Mi sposo ricorsivamente verso il basso
+        if ( key < root->key )      root->left = remove(root->left, key);  
+        else if( key > root->key )  root->right = remove(root->right, key);  
+        else{  
+            //Controllo se sono un figlio unico
+            if( (root->left == nullptr) || (root->right == nullptr) )  {  
+                node* temp = root->left ?  root->left : root->right;  
+                if (temp == nullptr)  {  
+                    temp = root;  
+                    root = nullptr;  
+                }  
+                else  *root = *temp;
+                //Eliminazione del nodo  
+                delete(temp);  
+            }  else{   
+                node* temp = minValueNode(root->right);  
+                //Copio i dati
+                root->key = temp->key;
+                root->val = temp->val;  
+
+                root->right = remove(root->right,  temp->key);  
+            }  
+        }  
+    
+        if (root == NULL)  return root;  
+        //Aggiornamento delle altezze
+        root->height = 1 + max(getheight(root->left),  getheight(root->right));  
+        //Sistemo il bilanciamento
+        int bilanciamento = valoreBilanciamento(root);  
+        // Caso sinistro
+        if (bilanciamento > 1 &&  valoreBilanciamento(root->left) >= 0)  return destra(root);  
+        if (bilanciamento > 1 &&  valoreBilanciamento(root->left) < 0)  {  
+            root->left = sinistra(root->left);  
+            return destra(root);  
+        }  
+        if (bilanciamento < -1 &&  valoreBilanciamento(root->right) <= 0)  return sinista(root);    
+        if (bilanciamento < -1 &&  valoreBilanciamento(root->right) > 0)  {  
+            root->right = destra(root->right);  
+            return sinistra(root);  
+        }  
+    
+        return root;  
+    }  
     
 };
 
@@ -215,7 +262,7 @@ int main() {
             s >> val;
 
             if (rbt == nullptr)     rbt = node::create(key, val);
-            else                    rbt = node::insert(rbt, key, val);
+            else rbt = node::insert(rbt, key, val);
 
         }
 
