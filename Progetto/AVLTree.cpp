@@ -46,7 +46,7 @@ public:
     /*
     EFFETTO:    Ritorna l'altezza dell'albero
 	*/
-    static int getHeight(node* root){
+    static int getheight(node* root){
         if(root == nullptr) return 0;
         return root->height;
     }
@@ -59,14 +59,14 @@ public:
                 root non deve essere nullptr
     */
     node* destra(node* root)  {  
-        if(root == nullptr) return nullptr
+        if(root == nullptr) return nullptr;
 
-        node *x = root->left, T2 = x->right;  
+        node* x = root->left, *T2 = x->right;  
         //Esecuzione della Rotazione
         x->right = root;  root->left = T2;  
         //A questo punto devo aggiornare le atezze  
-        root->height = max(height(root->left), height(root->right)) + 1;  
-        x->height = max(height(x->left), height(x->right)) + 1;  
+        root->height = max(getheight(root->left), getheight(root->right)) + 1;  
+        x->height = max(getheight(x->left), getheight(x->right)) + 1;  
         //Alla fine rotorno il nodo che ora diventa root 
         return x;  
     } 
@@ -78,16 +78,16 @@ public:
                 root non deve essere nullptr
     */
     node* sinistra(node* root)  {  
-        if(root == nullptr) return nullptr
+        if(root == nullptr) return nullptr;
 
-        node *y = root->right, T2 = y->left;  
+        node *y = root->right, *T2 = y->left;  
         //Esecuzione della Rotazione
         y->left = root;  root->right = T2;  
         //A questo punto devo aggiornare le atezze  
-        root->height = max(height(root->left), height(root->right)) + 1;  
-        y->height = max(height(y->left), height(y->right)) + 1;  
+        root->height = max(getheight(root->left), getheight(root->right)) + 1;  
+        y->height = max(getheight(y->left), getheight(y->right)) + 1;  
         //Alla fine rotorno il nodo che ora diventa root 
-        return x;  
+        return y;  
     } 
 
     /*
@@ -98,8 +98,96 @@ public:
     */
     int valoreBilanciamento(node* root){
         if(root == nullptr) return 0;
-        return getHeight(root->left) - getHeight(root->right);
+        return getheight(root->left) - getheight(root->right);
     }
+
+    /*
+    EFFETTO:    Inserimento di un nodo nell'albero
+
+    */
+    node* insert(node* root, int key, string val){
+        //Caso Base
+        if (root == nullptr)  return create(key, val);  
+        //Vaso di andare verso sinistra o verso desta
+        if (key < root->key)        root->left = insert(root->left, key, val);  
+        else if (key > root->key)   root->right = insert(root->right, key, val);
+        //Caso impossibile  
+        else return root;  
+  
+        //Aggionamento delle altezze
+        root->height = 1 + max(getheight(root->left),  getheight(root->right));  
+        int bilanciamento = valoreBilanciamento(root);  
+  
+        //A questo punto devo ribilanciare l'albero
+
+        // ho piu nodi a sinistra  
+        if (bilanciamento > 1 && key < root->left->key)    return destra(root);  
+        // ho piu nodi a destra  
+        if (bilanciamento < -1 && key > root->right->key)  return sinistra(root);  
+        //Ribilanciamento ricorsivo
+        if (bilanciamento > 1 && key > root->left->key)  {  
+            root->left = sinistra(root->left);  
+            return destra(root);  
+        }    
+        if (bilanciamento < -1 && key < root->right->key)  {  
+            root->right = destra(root->right);  
+            return sinistra(root);  
+        } 
+        //Ritorno il nodo
+        return root;  
+    }
+
+    /*
+	EFFETTO:		Cerca una certa chiave all'interno dell'albero
+	FUNZIONAMENTO:	key1 <= root < key2
+	DESCRIZIONE:	find k: trova nell'albero il nodo con chiave numerica k e restituisce il valore 
+					(di tipo stringa) associato a tale nodo (come sopra, si assuma che tale nodo esista)
+	*/
+	static node* find(node *root, int key) {
+		 node* iter = root;
+        //Ricerco il nodo
+        while (iter->key != key)
+            if (iter->key < key) iter = iter->right;
+            else iter = iter->left;
+
+        return iter;
+	}
+
+    /*
+	EFFETTO:		Elimita tutto l'albero compresa la root
+	FUNZIONAMENTO:	POSTORDER
+	DESCRIZIONE:	clear: rimuove tutti i nodi dall'albero, che diventer� quindi vuoto
+	*/
+	static node* clear(node *root) {
+		if (root == nullptr) return nullptr;
+		//Elimino la le foglie
+		if (root->left == nullptr && root->right == nullptr) {
+			delete(root);
+			return nullptr;
+		}
+		else {
+			//Elimino ricorsivamente i figli
+			if (root->left != nullptr) root->left = clear(root->left);
+			if (root->right != nullptr) root->right = clear(root->right);
+			//Elimino la root
+			return clear(root);
+			
+		}
+	}
+
+    /*
+	EFFETTO:		esegue una visita nell'albero
+	FUNZIONAMENTO:	PREORDER
+	DESCRIZIONE:	show: visualizza l'albero corrente
+	*/
+	static void show(node *root) {
+		if (root == nullptr)		cout << "NULL ";
+		else {
+			cout << root->key << ":" << root->val<<":"<<root->height<<" ";
+			show(root->left);
+			show(root->right);
+		}
+	}
     
 };
 
@@ -121,7 +209,7 @@ int main() {
         if (opzione == "exit") { finito = true; }
 
         else if (opzione == "insert") {
-            string val;
+            string val{};
             int key = 0;
             s >> key;
             s >> val;
@@ -143,33 +231,6 @@ int main() {
             node* res = node::find(rbt, key);
             cout << res->val;
             cout << "" << endl;
-        }
-
-        else if (opzione == "remove") {
-            int key = 0;
-            s >> key;
-
-            rbt = node::remove(rbt, key);
-        }
-
-        else if (opzione == "left") {
-            int key = 0;
-            s >> key;
-
-            node* toRotate = node::find(rbt, key);
-            rbt = node::rotateL(rbt, toRotate);
-        }
-        else if (opzione == "right") {
-            int key = 0;
-            s >> key;
-
-            node* toRotate = node::find(rbt, key);
-            rbt = node::rotateR(rbt, toRotate);
-        }
-
-        else if (opzione == "check") {
-            cout << ((node::check(rbt))? "GOOD" : "BAD!!!!");
-            cout << endl;
         }
 
         else if(opzione =="exit") { finito = true; }
