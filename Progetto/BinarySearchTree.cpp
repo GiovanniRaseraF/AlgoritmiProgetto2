@@ -153,7 +153,7 @@ public:
 };
 
 
-
+/*
 int main() {
 	//Inizializzazione della BST
 	node *bst= nullptr;
@@ -205,7 +205,6 @@ int main() {
 		else { finito = true; }
 	}
 	return 0;
-	/*
 	node* root = node::create(10, "ten");
 	node::insert(root, 5, "five");
 	node::insert(root, 2, "two");
@@ -223,5 +222,6 @@ int main() {
 
 	root = node::clear(root);
 	node::show(root);
-	*/
+	
 }
+*/

@@ -4,13 +4,11 @@
 #include <fstream>
 #include "Lambda.h"
 #include "Utils.h"
-#include "Prepara.cpp"
-#include "QuickSelect.cpp"
-#include "MOMSelectInPlace.cpp"
-#include "HeapSelect.cpp"
+#include "AVLTree.cpp"
+#include "BinarySearchTree.cpp"
+#include "RedBlackTree.cpp"
 
-
-#define MAX_VAL 3000000
+#define MAX_VAL 1000000
 #define DEBUG_CODE true
 
 using namespace std;
