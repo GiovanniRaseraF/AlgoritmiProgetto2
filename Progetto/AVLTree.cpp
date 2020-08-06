@@ -188,7 +188,24 @@ public:
 			show(root->right);
 		}
 	}
+
+    /*
+	EFFETTO: Trova il valore minimo nell'albero
+	*/
+	static node* min(node* root){
+		node* iter = root;
+		
+		//Trova il minimo andando a sinista
+		while (iter && iter->left != nullptr)
+			iter = iter->left;
+
+		return iter;
+	}
   
+    
+    /*
+	EFFETTO:		elimina un elemento dall'albero
+	*/
     static node* remove(node* root, int key)  {  
         //Caso Base
         if (root == nullptr)  return root;  
@@ -207,7 +224,7 @@ public:
                 //Eliminazione del nodo  
                 delete(temp);  
             }  else{   
-                node* temp = minValueNode(root->right);  
+                node* temp = min(root->right);  
                 //Copio i dati
                 root->key = temp->key;
                 root->val = temp->val;  
@@ -227,7 +244,7 @@ public:
             root->left = sinistra(root->left);  
             return destra(root);  
         }  
-        if (bilanciamento < -1 &&  valoreBilanciamento(root->right) <= 0)  return sinista(root);    
+        if (bilanciamento < -1 &&  valoreBilanciamento(root->right) <= 0)  return sinistra(root);    
         if (bilanciamento < -1 &&  valoreBilanciamento(root->right) > 0)  {  
             root->right = destra(root->right);  
             return sinistra(root);  
@@ -279,6 +296,13 @@ int main() {
             cout << res->val;
             cout << "" << endl;
         }
+
+        else if (opzione == "remove") {
+			int key = 0;
+			s >> key;
+
+			rbt = node::remove(rbt, key);
+		}
 
         else if(opzione =="exit") { finito = true; }
 

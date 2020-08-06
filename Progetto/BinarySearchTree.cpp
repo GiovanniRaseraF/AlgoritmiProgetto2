@@ -116,7 +116,6 @@ public:
 	/*
 	EFFETTO:		elimina un elemento dall'albero
 	FUNZIONAMENTO:	CERCA IL SUCCESSORE
-	DESCRIZIONE:	clear: rimuove tutti i nodi dall'albero, che diventer� quindi vuoto
 	*/
 	static node* remove(node *root, int key) {
 		//Caso base
