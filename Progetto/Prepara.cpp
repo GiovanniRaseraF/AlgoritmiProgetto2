@@ -32,6 +32,10 @@ public:
 		}
 	}
 
+	int at(int i){
+		return this->vettoreOriginale[i];
+	}
+
 	int execute(int* vettore, int start, int finish, int k) {
 		for (int i = 0; i < finish + 1; i++) {
 			vettore[i] = this->vettoreOriginale[i];
@@ -41,11 +45,20 @@ public:
 
 	void riprepara(int lenVettore) {
 		len = lenVettore;
+		std::mt19937 generator;
+
+		// Once per programme, before first use of generator
+		generator.seed((unsigned int)std::time(0));
+
+		std::uniform_int_distribution<uint32_t> dice(1, 100000);
+
+		//int random = dice(generator);
+
 		for (int i = 0; i < lenVettore; i++) {
-			long seed = std::rand();
+			long seed = dice(generator);
 			//std::cout << seed << " ";
 			this->vettoreOriginale[i] = seed;
-
+			
 		}
 	}
 };

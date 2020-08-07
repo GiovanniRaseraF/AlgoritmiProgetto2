@@ -43,7 +43,7 @@ namespace AVL{
 
         //Lambda Implementazione
     
-    
+
         //Funzioni statiche per la gestione
         static node* create(int key, string val) {
             return new node(key, val);
@@ -152,11 +152,19 @@ namespace AVL{
         static node* find(node *root, int key) {
             node* iter = root;
             //Ricerco il nodo
-            while (iter->key != key)
+            while (iter != nullptr && iter->key != key)
                 if (iter->key < key) iter = iter->right;
                 else iter = iter->left;
 
             return iter;
+        }
+
+        /*
+        EFFETTO: Ritorna vero se l'elemento è presente
+        */
+        static bool contains(node* root, int key){
+            if(node::find(root, key) == nullptr) return false;
+            return true; 
         }
 
         /*
@@ -169,6 +177,7 @@ namespace AVL{
             //Elimino la le foglie
             if (root->left == nullptr && root->right == nullptr) {
                 delete(root);
+                root = nullptr;
                 return nullptr;
             }
             else {
