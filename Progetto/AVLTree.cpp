@@ -3,6 +3,7 @@
 #include <math.h>
 #include <algorithm>
 #include <sstream>
+#include "Lambda.h"
 using namespace std;
 
 namespace AVL{
@@ -18,7 +19,7 @@ namespace AVL{
                         - b(n)=h(n.l)-h(n.r)  
     */
 
-    class node {
+    class node : Lambda{
     public:
         //Attributi
         int key;
@@ -40,6 +41,9 @@ namespace AVL{
 
         ~node() {}
 
+        //Lambda Implementazione
+    
+    
         //Funzioni statiche per la gestione
         static node* create(int key, string val) {
             return new node(key, val);

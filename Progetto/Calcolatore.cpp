@@ -64,7 +64,7 @@ int main() {
 	long maxSize = MAX_VAL;
 	long samples = 100;
 	int numeroElementi = 0, prevNumeroElementi = 0;
-	int numeroIterazioni = 10;
+	int numeroIterazioni = 50;
 
 	//Calcolo dei tempi
 	for (int i = 0; i < samples; i++) {
@@ -74,8 +74,13 @@ int main() {
 		prevNumeroElementi = numeroElementi;
 		numeroElementi = round(coefficiente * pow(base, i));
 
-		//QUICK
-		AVL::node::show(avl);
+
+
+		//AVL Tree
+		for(int iter = 0; iter < numeroIterazioni; iter++){
+			AVL::node::clean(avl);
+		}
+
 
 		//HEAP
 		
