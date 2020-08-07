@@ -6,7 +6,11 @@ Parte due, creazione di alberi
 
 # TODO:
 - Calcolatore dei tempi
+    - Generalizzazione del calcolo del tempo utilizzando l'interfaccia Lambda
+    - Aggingere la gestione del codice generalizzato per ogni tipo di albero
+    - Test del tempo
 - Finire Relazione
+- Creazione dei grafici
 
 
 # Richieste
