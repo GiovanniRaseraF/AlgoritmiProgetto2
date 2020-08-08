@@ -111,6 +111,7 @@ int main() {
 		
 
 		//Stampa
+		vettore->riprepara(MAX_VAL);
 		
 
 	}
@@ -134,7 +135,7 @@ double calcolaDeviazione(vector<long> tempi, double tempoammortizzato, int repet
 
 long inserimento(AVL::node* avl, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore){
 	long timeS, timeE;
-	int c = 0, c1;
+	int c = 0, c1 = 0;
 	timeS = nanosec();
 	do {
 		for (int i = 0; i < numeroElementi; i++) {

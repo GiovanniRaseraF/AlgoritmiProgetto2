@@ -132,7 +132,7 @@ double calcolaDeviazione(vector<double> tempi, double tempoammortizzato, int rep
 
 double inserimento(AVL::node* avl, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore) {
 	long timeS, timeE;
-	int c = 0, c1;
+	int c = 0, c1 = 0;
 	timeS = nanosec();
 	do {
 		for (int i = 0; i < numeroElementi; i++) {

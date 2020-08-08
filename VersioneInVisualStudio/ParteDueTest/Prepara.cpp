@@ -19,7 +19,7 @@ public:
 		// Once per programme, before first use of generator
 		generator.seed((unsigned int)std::time(0));
 
-		std::uniform_int_distribution<uint32_t> dice(1, 100000);
+		std::uniform_int_distribution<uint32_t> dice(1, 100000000);
 
 		//int random = dice(generator);
 
@@ -49,7 +49,7 @@ public:
 		// Once per programme, before first use of generator
 		generator.seed((unsigned int)std::time(0));
 
-		std::uniform_int_distribution<uint32_t> dice(1, 100000);
+		std::uniform_int_distribution<uint32_t> dice(1, 100000000);
 
 		//int random = dice(generator);
 

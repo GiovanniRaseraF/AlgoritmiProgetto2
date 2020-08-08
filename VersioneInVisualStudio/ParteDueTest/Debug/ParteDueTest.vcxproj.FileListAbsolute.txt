@@ -1,0 +1,2 @@
+C:\Users\giovannirasera\source\repos\AlgoritmiProgetto2\VersioneInVisualStudio\ParteDueTest\Debug\ParteDueTest.exe
+C:\Users\giovannirasera\source\repos\AlgoritmiProgetto2\VersioneInVisualStudio\ParteDueTest\Debug\ParteDueTest.pdb
