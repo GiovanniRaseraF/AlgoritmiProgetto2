@@ -3,23 +3,23 @@
 #include <math.h>
 #include <algorithm>
 #include <sstream>
-
+#include "Lambda.h"
 using namespace std;
 
-namespace AVL {
+namespace AVL{
     /*
-    *  SPECIFICA:  L'albero AVL è un albero binario di ricerca bilanciato in cui il
-                    coefficiente di bilanciamento per ciascun nodo
-                        - vale 1,
-                        - 0
+    *  SPECIFICA:  L'albero AVL è un albero binario di ricerca bilanciato in cui il 
+                    coefficiente di bilanciamento per ciascun nodo 
+                        - vale 1, 
+                        - 0 
                         - oppure -1 (nel caso di un albero AVL completo tutti i coefficienti di bilanciamento sono uguali a 0).
 
-    *  PROPRIETA': Viene definito il coefficiente di bilanciamento come la differenza tra le altezze,
+    *  PROPRIETA': Viene definito il coefficiente di bilanciamento come la differenza tra le altezze, 
                     rispettivamente, del sottoalbero sinistro e del sottoalbero destro di un nodo:
-                        - b(n)=h(n.l)-h(n.r)
+                        - b(n)=h(n.l)-h(n.r)  
     */
 
-    class node  {
+    class node : Lambda{
     public:
         //Attributi
         int key;
@@ -30,10 +30,9 @@ namespace AVL {
         int height;
 
         //Costruttore del nodo
-        node(int key, string val) {
+        node(int key, const string &val) {
             this->key = key;
             this->val = val;
-            this->father = nullptr;
             this->left = nullptr;
             this->right = nullptr;
             this->height = 1;
@@ -42,18 +41,18 @@ namespace AVL {
         ~node() {}
 
         //Lambda Implementazione
-
+    
 
         //Funzioni statiche per la gestione
-        static node* create(int key, string val) {
+        static node* create(int key, const string &val) {
             return new node(key, val);
         }
 
         /*
         EFFETTO:    Ritorna l'altezza dell'albero
         */
-        static int getheight(node* root) {
-            if (root == nullptr) return 0;
+        static int getheight(node* root){
+            if(root == nullptr) return 0;
             return root->height;
         }
 
@@ -64,18 +63,18 @@ namespace AVL {
         PRE:        Devono essere presenti dei nodi
                     root non deve essere nullptr
         */
-        static node* destra(node* root) {
-            if (root == nullptr) return nullptr;
+        static node* destra(node* root)  {  
+            if(root == nullptr) return nullptr;
 
-            node* x = root->left, * T2 = x->right;
+            node* x = root->left, *T2 = x->right;  
             //Esecuzione della Rotazione
-            x->right = root;  root->left = T2;
+            x->right = root;  root->left = T2;  
             //A questo punto devo aggiornare le atezze  
-            root->height = max(getheight(root->left), getheight(root->right)) + 1;
-            x->height = max(getheight(x->left), getheight(x->right)) + 1;
+            root->height = max(getheight(root->left), getheight(root->right)) + 1;  
+            x->height = max(getheight(x->left), getheight(x->right)) + 1;  
             //Alla fine rotorno il nodo che ora diventa root 
-            return x;
-        }
+            return x;  
+        } 
 
         //Sinistra
         /*
@@ -83,18 +82,18 @@ namespace AVL {
         PRE:        Devono essere presenti dei nodi
                     root non deve essere nullptr
         */
-        static node* sinistra(node* root) {
-            if (root == nullptr) return nullptr;
+        static node* sinistra(node* root)  {  
+            if(root == nullptr) return nullptr;
 
-            node* y = root->right, * T2 = y->left;
+            node *y = root->right, *T2 = y->left;  
             //Esecuzione della Rotazione
-            y->left = root;  root->right = T2;
+            y->left = root;  root->right = T2;  
             //A questo punto devo aggiornare le atezze  
-            root->height = max(getheight(root->left), getheight(root->right)) + 1;
-            y->height = max(getheight(y->left), getheight(y->right)) + 1;
+            root->height = max(getheight(root->left), getheight(root->right)) + 1;  
+            y->height = max(getheight(y->left), getheight(y->right)) + 1;  
             //Alla fine rotorno il nodo che ora diventa root 
-            return y;
-        }
+            return y;  
+        } 
 
         /*
         EFFETTO:    Ritorna il fattore di bilanciamento
@@ -102,8 +101,8 @@ namespace AVL {
                     1 se c'e piu peso a sinista
                     - 1 se c'e piu peso a destra
         */
-        static int valoreBilanciamento(node* root) {
-            if (root == nullptr) return 0;
+        static int valoreBilanciamento(node* root){
+            if(root == nullptr) return 0;
             return getheight(root->left) - getheight(root->right);
         }
 
@@ -111,45 +110,45 @@ namespace AVL {
         EFFETTO:    Inserimento di un nodo nell'albero
 
         */
-        static node* insert(node* root, int key, string val) {
+        static node* insert(node* root, int key, const string &val){
             //Caso Base
-            if (root == nullptr)  return create(key, val);
+            if (root == nullptr)  return create(key, val);  
             //Vaso di andare verso sinistra o verso desta
-            if (key < root->key)        root->left = insert(root->left, key, val);
+            if (key < root->key)        root->left = insert(root->left, key, val);  
             else if (key > root->key)   root->right = insert(root->right, key, val);
             //Caso impossibile  
-            else return root;
-
+            else return root;  
+    
             //Aggionamento delle altezze
-            root->height = 1 + max(getheight(root->left), getheight(root->right));
-            int bilanciamento = valoreBilanciamento(root);
-
+            root->height = 1 + max(getheight(root->left),  getheight(root->right));  
+            int bilanciamento = valoreBilanciamento(root);  
+    
             //A questo punto devo ribilanciare l'albero
 
             // ho piu nodi a sinistra  
-            if (bilanciamento > 1 && key < root->left->key)    return destra(root);
+            if (bilanciamento > 1 && key < root->left->key)    return destra(root);  
             // ho piu nodi a destra  
-            if (bilanciamento < -1 && key > root->right->key)  return sinistra(root);
+            if (bilanciamento < -1 && key > root->right->key)  return sinistra(root);  
             //Ribilanciamento ricorsivo
-            if (bilanciamento > 1 && key > root->left->key) {
-                root->left = sinistra(root->left);
-                return destra(root);
-            }
-            if (bilanciamento < -1 && key < root->right->key) {
-                root->right = destra(root->right);
-                return sinistra(root);
-            }
+            if (bilanciamento > 1 && key > root->left->key)  {  
+                root->left = sinistra(root->left);  
+                return destra(root);  
+            }    
+            if (bilanciamento < -1 && key < root->right->key)  {  
+                root->right = destra(root->right);  
+                return sinistra(root);  
+            } 
             //Ritorno il nodo
-            return root;
+            return root;  
         }
 
         /*
         EFFETTO:		Cerca una certa chiave all'interno dell'albero
         FUNZIONAMENTO:	key1 <= root < key2
-        DESCRIZIONE:	find k: trova nell'albero il nodo con chiave numerica k e restituisce il valore
+        DESCRIZIONE:	find k: trova nell'albero il nodo con chiave numerica k e restituisce il valore 
                         (di tipo stringa) associato a tale nodo (come sopra, si assuma che tale nodo esista)
         */
-        static node* find(node* root, int key) {
+        static node* find(node *root, int key) {
             node* iter = root;
             //Ricerco il nodo
             while (iter != nullptr && iter->key != key)
@@ -162,9 +161,9 @@ namespace AVL {
         /*
         EFFETTO: Ritorna vero se l'elemento è presente
         */
-        static bool contains(node* root, int key) {
-            if (node::find(root, key) == nullptr) return false;
-            return true;
+        static bool contains(node* root, int key){
+            if(node::find(root, key) == nullptr) return false;
+            return true; 
         }
 
         /*
@@ -172,7 +171,7 @@ namespace AVL {
         FUNZIONAMENTO:	POSTORDER
         DESCRIZIONE:	clear: rimuove tutti i nodi dall'albero, che diventer� quindi vuoto
         */
-        static node* clear(node* root) {
+        static node* clear(node *root) {
             if (root == nullptr) return nullptr;
             //Elimino la le foglie
             if (root->left == nullptr && root->right == nullptr) {
@@ -186,7 +185,7 @@ namespace AVL {
                 if (root->right != nullptr) root->right = clear(root->right);
                 //Elimino la root
                 return clear(root);
-
+                
             }
         }
 
@@ -195,10 +194,10 @@ namespace AVL {
         FUNZIONAMENTO:	PREORDER
         DESCRIZIONE:	show: visualizza l'albero corrente
         */
-        static void show(node* root) {
+        static void show(node *root) {
             if (root == nullptr)		cout << "NULL ";
             else {
-                cout << root->key << ":" << root->val << ":" << root->height << " ";
+                cout << root->key << ":" << root->val<<":"<<root->height<<" ";
                 show(root->left);
                 show(root->right);
             }
@@ -207,68 +206,67 @@ namespace AVL {
         /*
         EFFETTO: Trova il valore minimo nell'albero
         */
-        static node* min(node* root) {
+        static node* min(node* root){
             node* iter = root;
-
+            
             //Trova il minimo andando a sinista
             while (iter && iter->left != nullptr)
                 iter = iter->left;
 
             return iter;
         }
-
-
+    
+        
         /*
         EFFETTO:		elimina un elemento dall'albero
         */
-        static node* remove(node* root, int key) {
+        static node* remove(node* root, int key)  {  
             //Caso Base
-            if (root == nullptr)  return root;
+            if (root == nullptr)  return root;  
             //Mi sposo ricorsivamente verso il basso
-            if (key < root->key)      root->left = remove(root->left, key);
-            else if (key > root->key)  root->right = remove(root->right, key);
-            else {
+            if ( key < root->key )      root->left = remove(root->left, key);  
+            else if( key > root->key )  root->right = remove(root->right, key);  
+            else{  
                 //Controllo se sono un figlio unico
-                if ((root->left == nullptr) || (root->right == nullptr)) {
-                    node* temp = root->left ? root->left : root->right;
-                    if (temp == nullptr) {
-                        temp = root;
-                        root = nullptr;
-                    }
+                if( (root->left == nullptr) || (root->right == nullptr) )  {  
+                    node* temp = root->left ?  root->left : root->right;  
+                    if (temp == nullptr)  {  
+                        temp = root;  
+                        root = nullptr;  
+                    }  
                     else  *root = *temp;
                     //Eliminazione del nodo  
-                    delete(temp);
-                }
-                else {
-                    node* temp = min(root->right);
+                    delete(temp);  
+                }  else{   
+                    node* temp = min(root->right);  
                     //Copio i dati
                     root->key = temp->key;
-                    root->val = temp->val;
+                    root->val = temp->val;  
 
-                    root->right = remove(root->right, temp->key);
-                }
-            }
-
-            if (root == NULL)  return root;
+                    root->right = remove(root->right,  temp->key);  
+                }  
+            }  
+        
+            if (root == NULL)  return root;  
             //Aggiornamento delle altezze
-            root->height = 1 + max(getheight(root->left), getheight(root->right));
+            root->height = 1 + max(getheight(root->left),  getheight(root->right));  
             //Sistemo il bilanciamento
-            int bilanciamento = valoreBilanciamento(root);
+            int bilanciamento = valoreBilanciamento(root);  
             // Caso sinistro
-            if (bilanciamento > 1 && valoreBilanciamento(root->left) >= 0)  return destra(root);
-            if (bilanciamento > 1 && valoreBilanciamento(root->left) < 0) {
-                root->left = sinistra(root->left);
-                return destra(root);
-            }
-            if (bilanciamento < -1 && valoreBilanciamento(root->right) <= 0)  return sinistra(root);
-            if (bilanciamento < -1 && valoreBilanciamento(root->right) > 0) {
-                root->right = destra(root->right);
-                return sinistra(root);
-            }
-
-            return root;
-        }
-
+            if (bilanciamento > 1 &&  valoreBilanciamento(root->left) >= 0)  return destra(root);  
+            if (bilanciamento > 1 &&  valoreBilanciamento(root->left) < 0)  {  
+                root->left = sinistra(root->left);  
+                return destra(root);  
+            }  
+            if (bilanciamento < -1 &&  valoreBilanciamento(root->right) <= 0)  return sinistra(root);    
+            if (bilanciamento < -1 &&  valoreBilanciamento(root->right) > 0)  {  
+                root->right = destra(root->right);  
+                return sinistra(root);  
+            }  
+        
+            return root;  
+        }  
+        
     };
 }
 
@@ -276,7 +274,6 @@ namespace AVL {
 //Main
 int main() {
     //Inizializzazione della RBT
-    using namespace AVL;
     node* rbt = nullptr;
 
     //LOOP DELLE OPZIONI
@@ -316,11 +313,11 @@ int main() {
         }
 
         else if (opzione == "remove") {
-            int key = 0;
-            s >> key;
+			int key = 0;
+			s >> key;
 
-            rbt = node::remove(rbt, key);
-        }
+			rbt = node::remove(rbt, key);
+		}
 
         else if(opzione =="exit") { finito = true; }
 

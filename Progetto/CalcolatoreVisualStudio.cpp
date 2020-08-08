@@ -96,12 +96,12 @@ int main() {
 			//Somma dei tempo
 			totalTimeAVL += start;
 			//Salvataggio del tempo per calcolo della varianza
-			tempMemAVL.push_back(start);
+			//tempMemAVL.push_back(start);
 		}
 
 		//Calcolo del tempo ammortizzato
 		double tempoAmmortizzatoAVL = (double)totalTimeAVL / (double)numeroIterazioni;
-		double deviazioneAVL = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
+		double deviazioneAVL = 0;calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
 
 		
 		
