@@ -8,5 +8,8 @@ DEPS = Lambda.h Utils.h
 calcmake:  Calcolatore.o 
 	$(CC) -o calcolare  Calcolatore.o
 
+vscalc:  CalcolatoreVisualStudio.o 
+	$(CC) -o vscalcolatore  CalcolatoreVisualStudio.o
+
 clean:
 	rm *.o
