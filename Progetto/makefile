@@ -10,6 +10,7 @@ calcmake:  Calcolatore.o
 
 vscalc:  CalcolatoreVisualStudio.o 
 	$(CC) -o vscalcolatore  CalcolatoreVisualStudio.o
+	
 
 clean:
 	rm *.o

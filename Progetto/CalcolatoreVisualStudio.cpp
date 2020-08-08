@@ -69,7 +69,7 @@ int main() {
 	//Campionamento
 	long minSize = 100;
 	long maxSize = MAX_VAL;
-	long samples = 1000;
+	long samples = 100;
 	int numeroElementi = 0, prevNumeroElementi = 0;
 	int initialRepetition = 1000;
 	int numeroIterazioni = 50;
@@ -127,7 +127,7 @@ int main() {
 
 
 
-
+		vettore->riprepara(numeroElementi);
 		//Stampa
 		cout << numeroElementi << " " << tempoAmmortizzatoAVL << " " << deviazioneAVL << " " << tempoAmmortizzatoBST << " " << deviazioneBST << endl;
 
