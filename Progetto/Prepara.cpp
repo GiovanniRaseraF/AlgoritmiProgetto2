@@ -15,12 +15,14 @@ public:
 	Prepara(int lenVettore) {
 		this->vettoreOriginale = new int[lenVettore];
 		len = lenVettore;
+		int min = -len / 2;
+        int max = len / 2;
 		std::mt19937 generator;
 
 		// Once per programme, before first use of generator
 		generator.seed((unsigned int)std::time(0));
 
-		std::uniform_int_distribution<uint32_t> dice(1, 100000000);
+		std::uniform_int_distribution<uint32_t> dice(min, max+1);
 
 		//int random = dice(generator);
 
@@ -44,13 +46,14 @@ public:
 	}
 
 	void riprepara(int lenVettore) {
-		len = lenVettore;
+		int min = -len / 2;
+        int max = len / 2;
 		std::mt19937 generator;
 
 		// Once per programme, before first use of generator
 		generator.seed((unsigned int)std::time(0));
 
-		std::uniform_int_distribution<uint32_t> dice(1, 100000000);
+		std::uniform_int_distribution<uint32_t> dice(min, max+1);
 
 		//int random = dice(generator);
 
