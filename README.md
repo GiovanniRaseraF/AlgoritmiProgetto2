@@ -11,7 +11,7 @@ Parte due, creazione di alberi
     - Test del tempo
 - Finire Relazione
 - Creazione dei grafici
-
+- RISOLVERE IL PROBLEMA DELLA DEALLOCAZIONE DELLA MEMORIA
 
 # Richieste
 Di seguito sono riportate le consegne per la seconda parte del progetto di laboratorio, da consegnare necessariamente prima dell'iscrizione all'esame finale di teoria.
