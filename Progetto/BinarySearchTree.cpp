@@ -57,12 +57,22 @@ namespace BST{
 		static node* find(node *root, int key) {
 			node* iter = root;
 			//Ricerco il nodo
-			while (iter->key != key)
+			while (iter != nullptr && iter->key != key)
 				if (iter->key < key) iter = iter->right;
 				else iter = iter->left;
 
 			return iter;
 		}
+
+		
+        /*
+        EFFETTO: Ritorna vero se l'elemento è presente
+        */
+        static bool contains(node* root, int key){
+            if(node::find(root, key) == nullptr) return false;
+            return true; 
+        }
+
 
 		/*
 		EFFETTO:		Elimita tutto l'albero compresa la root
