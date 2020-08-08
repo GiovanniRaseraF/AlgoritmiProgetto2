@@ -98,7 +98,7 @@ int main() {
 		}
 
 		//Calcolo del tempo ammortizzato
-		double tempoAmmortizzatoAVL = (double)totalTimeAVL / numeroIterazioni;
+		double tempoAmmortizzatoAVL = (double)totalTimeAVL / numeroElementi;
 		double deviazioneAVL = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
 
 		
@@ -120,7 +120,7 @@ int main() {
 		}
 
 		//Calcolo del tempo ammortizzato
-		double tempoAmmortizzatoBST = (double)totalTimeBST / numeroIterazioni;
+		double tempoAmmortizzatoBST = (double)totalTimeBST / numeroElementi;
 		double deviazioneBST = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoBST, numeroElementi);
 
 		//MOM
@@ -160,7 +160,7 @@ double inserimento(AVL::node* avl, int numeroElementi, double erroreMinimo, long
 				avl = AVL::node::create(vettore->at(i), "test");
 				c1++;
 			}
-			else if (AVL::node::contains(avl, vettore->at(i))) {
+			else if (!AVL::node::contains(avl, vettore->at(i))) {
 				AVL::node::insert(avl, vettore->at(i), "test");
 				c1++;
 			}
@@ -170,6 +170,8 @@ double inserimento(AVL::node* avl, int numeroElementi, double erroreMinimo, long
 	} while (timeE - timeS <= risoluzione * (1.0 / erroreMinimo) + 1.0);
 	return ((timeE - timeS) / c) / c1;
 }
+
+
 double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore) {
 	long timeS, timeE;
 	int c = 0, c1 = 0;
@@ -180,7 +182,7 @@ double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long
 				bst = BST::node::create(vettore->at(i), "test");
 				c1++;
 			}
-			else if (BST::node::contains(bst, vettore->at(i))) {
+			else if (!BST::node::contains(bst, vettore->at(i))) {
 				BST::node::insert(bst, vettore->at(i), "test");
 				c1++;
 			}
