@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  4 AUG 2020 19:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  8 AUG 2020 14:14
 entering extended mode
 **./Relazione2.tex
 (Relazione2.tex
@@ -260,7 +260,7 @@ Package pdftex.def Info: Creatore1.png  used on input line 37.
 <Enum.png, id=28, 165.31763pt x 268.6035pt>
 File: Enum.png Graphic file (type png)
 <use Enum.png>
-Package pdftex.def Info: Enum.png  used on input line 59.
+Package pdftex.def Info: Enum.png  used on input line 78.
 (pdftex.def)             Requested size: 85.35826pt x 138.69096pt.
  [5 <./Enum.png>] [6] [7]
 (Relazione2.aux) ) 
@@ -282,9 +282,9 @@ sers\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm120
 0.pk> <C:\Users\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi
 600\ecrm1728.pk><C:/Users/Matteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
 public/amsfonts/cm/cmsy10.pfb>
-Output written on Relazione2.pdf (7 pages, 323649 bytes).
+Output written on Relazione2.pdf (7 pages, 331556 bytes).
 PDF statistics:
- 257 PDF objects out of 1000 (max. 8388607)
+ 276 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -49,6 +49,25 @@
 		 	\subsection{Analisi e calcolo tempi}
 	   	 \newpage
 		\section{Alberi binari di ricerca di tipo AVL}
+			\subsection{Introduzione}
+			La seconda struttura dati che analizziamo è quella degli alberi creati da \textit{Adelson-Velsky and Landis (AVL tree)}.\\
+			Oltre a soddisfare le proprietà di un albero di ricerca semplice, l'AVL ha una caratteristica in più: \textit{per ogni nodo x all'interno dell'albero, le altezze dei sotto-alberi di sinistra e di destra differiscono al massimo di 1.}\\
+			Tale proprietà viene garantita \textit{eseguendo opportune rotazioni sui nodi sbilanciati}, partendo dal nodo sbilanciato più profondo e procedendo risalendo l'albero lungo il cammino di accesso a quel nodo.\\
+			Per la loro rappresentazione è stata creata una classe che crea i singoli nodi, ognuno dei quali è composto da sei attributi:
+			\begin{itemize}
+				\item \textbf{key:} elemento che rappresenta la chiave numerica del nodo;
+				\item \textbf{val:} elemento che rappresenta il valore del nodo sotto forma di stringa;
+				\item \textbf{left, right e father:} rappresentano i figli del nodo, rispettivamente quello sinistro e destro, e il padre del nodo. Vengono inizializzati a \textit{NILL}.
+				\item \textbf{height:} rappresenta l'altezza del nodo ed è inizializzato a 1;
+			\end{itemize}
+			Possiamo trovare una serie di funzioni che servono a rendere la struttura funzionante:
+			\begin{enumerate}
+				\item \textbf{la funzione get height:} ritorna l'altezza dell'albero;
+				\item \textbf{la funzione destra e sinistra:} eseguono la rotazione dell'albero verso destra o sinistra;
+				\item \textbf{la funzione valore di bilanciamento:} ritorna 0 se la root è null oppure sono perfettamente bilanciati, 1 se c'è più peso a sinistra oppure -1 se c'è più peso a destra;
+				\item \textbf{tutte le funzioni viste precedentemente sui BST};
+			\end{enumerate}
+			
 		\newpage
 		
 		\section{Alberi binari di ricerca di tipo Red-Black}
