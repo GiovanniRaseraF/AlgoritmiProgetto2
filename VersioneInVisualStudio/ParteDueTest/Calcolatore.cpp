@@ -67,7 +67,7 @@ int main() {
 	//Campionamento
 	long minSize = 100;
 	long maxSize = MAX_VAL;
-	long samples = 100;
+	long samples = 1000;
 	int numeroElementi = 0, prevNumeroElementi = 0;
 	int initialRepetition = 1000;
 	int numeroIterazioni = 50;
@@ -96,7 +96,7 @@ int main() {
 		}
 
 		//Calcolo del tempo ammortizzato
-		double tempoAmmortizzatoAVL = (double)totalTimeAVL / (double)numeroIterazioni;
+		double tempoAmmortizzatoAVL = (double)totalTimeAVL / numeroIterazioni;
 		double deviazioneAVL = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
 
 		cout << numeroElementi << " " << tempoAmmortizzatoAVL << " " << deviazioneAVL << endl;
