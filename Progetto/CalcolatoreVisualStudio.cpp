@@ -42,12 +42,13 @@ EFFETTO: nanosecondi
 long nanosec() { return duration_cast<nanosecondi>(steady_clock::now().time_since_epoch()).count(); }
 
 
+const string stringaSempre = "t";
 /*
 EFFETTO: Esegue gli inserimeti all'interno dell'albero e
 ritorna il tempo che ci mette a fare l'operazione
 */
 double inserimento(AVL::node* avl, int repetitionsCounter, double erroreMassimolong, long risoluzione, Prepara* vettore);
-double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore);
+//double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore);
 
 double calcolaDeviazione(vector<double> tempi, double, int repetitionsCounter);
 
@@ -62,9 +63,10 @@ int main() {
 	//Lambda
 	Prepara* vettore = new Prepara(MAX_VAL);
 
+	
 	//Tree
-	AVL::node* avl = AVL::node::create(10, "hello");
-	BST::node* bst = BST::node::create(10, "hello");
+	AVL::node* avl = AVL::node::create(10, stringaSempre);
+	//BST::node* bst = BST::node::create(10, stringaSempre);
 
 	//Campionamento
 	long minSize = 100;
@@ -98,13 +100,14 @@ int main() {
 		}
 
 		//Calcolo del tempo ammortizzato
-		double tempoAmmortizzatoAVL = (double)totalTimeAVL / numeroElementi;
+		double tempoAmmortizzatoAVL = (double)totalTimeAVL / (double)numeroIterazioni;
 		double deviazioneAVL = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
 
 		
 		
 		
 		//BS Tree
+		/*
 		long totalTimeBST = 0;
 		vector<double> tempMemBST{};
 		for (int iter = 0; iter < numeroIterazioni; iter++) {
@@ -112,7 +115,7 @@ int main() {
 			BST::node::clear(bst);
 			bst = nullptr;
 			//Conto il tempo che ci metto a fare gli iserimenti
-			double start = inserimento(bst, numeroElementi, erroreMassimo, risoluzione, vettore);
+			double start = 0;//inserimento(bst, numeroElementi, erroreMassimo, risoluzione, vettore);
 			//Somma dei tempo
 			totalTimeBST += start;
 			//Salvataggio del tempo per calcolo della varianza
@@ -122,14 +125,14 @@ int main() {
 		//Calcolo del tempo ammortizzato
 		double tempoAmmortizzatoBST = (double)totalTimeBST / numeroElementi;
 		double deviazioneBST = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoBST, numeroElementi);
-
+		*/
 		//MOM
 
 
 
 		vettore->riprepara(numeroElementi);
 		//Stampa
-		cout << numeroElementi << " " << tempoAmmortizzatoAVL << " " << deviazioneAVL << " " << tempoAmmortizzatoBST << " " << deviazioneBST << endl;
+		cout << numeroElementi << " " << tempoAmmortizzatoAVL << " " << deviazioneAVL <<endl;// " " << tempoAmmortizzatoBST << " " << deviazioneBST << endl;
 
 	}
 
@@ -157,11 +160,11 @@ double inserimento(AVL::node* avl, int numeroElementi, double erroreMinimo, long
 	do {
 		for (int i = 0; i < numeroElementi; i++) {
 			if (avl == nullptr) {
-				avl = AVL::node::create(vettore->at(i), "test");
+				avl = AVL::node::create(vettore->at(i), stringaSempre);
 				c1++;
 			}
 			else if (!AVL::node::contains(avl, vettore->at(i))) {
-				AVL::node::insert(avl, vettore->at(i), "test");
+				AVL::node::insert(avl, vettore->at(i), stringaSempre);
 				c1++;
 			}
 		}
@@ -171,7 +174,7 @@ double inserimento(AVL::node* avl, int numeroElementi, double erroreMinimo, long
 	return ((timeE - timeS) / c) / c1;
 }
 
-
+/*
 double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore) {
 	long timeS, timeE;
 	int c = 0, c1 = 0;
@@ -179,11 +182,11 @@ double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long
 	do {
 		for (int i = 0; i < numeroElementi; i++) {
 			if (bst == nullptr) {
-				bst = BST::node::create(vettore->at(i), "test");
+				bst = BST::node::create(vettore->at(i), stringaSempre);
 				c1++;
 			}
 			else if (!BST::node::contains(bst, vettore->at(i))) {
-				BST::node::insert(bst, vettore->at(i), "test");
+				BST::node::insert(bst, vettore->at(i), stringaSempre);
 				c1++;
 			}
 		}
@@ -191,4 +194,4 @@ double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long
 		c++;
 	} while (timeE - timeS <= risoluzione * (1.0 / erroreMinimo) + 1.0);
 	return ((timeE - timeS) / c) / c1;
-}
+}*/

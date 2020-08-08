@@ -30,10 +30,9 @@ namespace AVL{
         int height;
 
         //Costruttore del nodo
-        node(int key, string val) {
+        node(int key, const string &val) {
             this->key = key;
             this->val = val;
-            this->father = nullptr;
             this->left = nullptr;
             this->right = nullptr;
             this->height = 1;
@@ -45,7 +44,7 @@ namespace AVL{
     
 
         //Funzioni statiche per la gestione
-        static node* create(int key, string val) {
+        static node* create(int key, const string &val) {
             return new node(key, val);
         }
 
@@ -111,7 +110,7 @@ namespace AVL{
         EFFETTO:    Inserimento di un nodo nell'albero
 
         */
-        static node* insert(node* root, int key, string val){
+        static node* insert(node* root, int key, const string &val){
             //Caso Base
             if (root == nullptr)  return create(key, val);  
             //Vaso di andare verso sinistra o verso desta
