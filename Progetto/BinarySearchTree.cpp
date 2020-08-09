@@ -15,7 +15,7 @@ namespace BST{
 		node* right;
 
 		//Costruttore del nodo
-		node(int key, string &val) {
+		node(int key, const string &val) {
 			this->key = key;
 			this->val = val;
 			this->left = nullptr;
@@ -25,7 +25,7 @@ namespace BST{
 		~node() {}
 
 		//Funzioni statiche per la gestione
-		static node *create(int key, string &val) {
+		static node *create(int key, const string &val) {
 			return new node(key, val);
 		}
 
@@ -36,7 +36,7 @@ namespace BST{
 						con chiave k di tipo intero e valore v di tipo stringa 
 						(si assuma che l'albero non contenga gi� un nodo con chiave k)
 		*/
-		static void insert(node *root, int key, string &val) {
+		static void insert(node* root, int key, const string &val) {
 			//Destra
 			if (root->key < key)
 				if (root->right == nullptr) root->right = create(key, val);
@@ -46,6 +46,7 @@ namespace BST{
 			else
 				if (root->left == nullptr)	root->left = create(key, val);
 				else						insert(root->left, key, val);
+			
 		}
 
 		/*
@@ -83,8 +84,7 @@ namespace BST{
 			if (root == nullptr) return nullptr;
 			//Elimino la le foglie
 			if (root->left == nullptr && root->right == nullptr) {
-				delete(root);
-				root = nullptr;
+				delete root;
 				return nullptr;
 			}
 			else {

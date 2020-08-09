@@ -48,7 +48,7 @@ EFFETTO: Esegue gli inserimeti all'interno dell'albero e
 ritorna il tempo che ci mette a fare l'operazione
 */
 double inserimento(AVL::node*& avl, int repetitionsCounter, double erroreMassimolong, long risoluzione, Prepara* vettore);
-//double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore);
+double inserimento(BST::node*& bst, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore);
 
 double calcolaDeviazione(vector<double> tempi, double, int repetitionsCounter);
 /*
@@ -86,10 +86,10 @@ int main() {
 	
 	//Tree
 	AVL::node* avl = AVL::node::create(10, stringaSempre);
-	//BST::node* bst = BST::node::create(10, stringaSempre);
+	BST::node* bst = BST::node::create(10, stringaSempre);
 
 	//Campionamento
-	long minSize = 100;
+	long minSize = 1000;
 	long maxSize = MAX_VAL;
 	long samples = 100;
 	int numeroElementi = 0, prevNumeroElementi = 0;
@@ -126,15 +126,14 @@ int main() {
 		
 		
 		//BS Tree
-		/*
 		long totalTimeBST = 0;
 		vector<double> tempMemBST{};
 		for (int iter = 0; iter < numeroIterazioni; iter++) {
 			//Pulizia dell'albero
-			BST::node::clear(bst);
+			bst = BST::node::clear(bst);
 			bst = nullptr;
 			//Conto il tempo che ci metto a fare gli iserimenti
-			double start = 0;//inserimento(bst, numeroElementi, erroreMassimo, risoluzione, vettore);
+			double start = inserimento(bst, numeroElementi, erroreMassimo, risoluzione, vettore);
 			//Somma dei tempo
 			totalTimeBST += start;
 			//Salvataggio del tempo per calcolo della varianza
@@ -142,17 +141,18 @@ int main() {
 		}
 
 		//Calcolo del tempo ammortizzato
-		double tempoAmmortizzatoBST = (double)totalTimeBST / numeroElementi;
+		double tempoAmmortizzatoBST = (double)totalTimeBST / numeroIterazioni;
 		double deviazioneBST = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoBST, numeroElementi);
-		*/
-		//MOM
+		
+		//RB Tree
+
 
 
 
 		vettore->riprepara(numeroElementi);
 		//Stampa
-		cout << numeroElementi << " " << tempoAmmortizzatoAVL << " " << deviazioneAVL <<endl;// " " << tempoAmmortizzatoBST << " " << deviazioneBST << endl;
-
+		cout << numeroElementi << " " << tempoAmmortizzatoAVL << " " << deviazioneAVL << " " << tempoAmmortizzatoBST << " " << deviazioneBST << endl;
+		cerr << numeroElementi << " " << tempoAmmortizzatoAVL << " " << deviazioneAVL << " " << tempoAmmortizzatoBST << " " << deviazioneBST << endl;
 	}
 
 	return 0;
@@ -193,8 +193,8 @@ double inserimento(AVL::node*& avl, int numeroElementi, double erroreMinimo, lon
 	return ((timeE - timeS) / c) / c1;
 }
 
-/*
-double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore) {
+
+double inserimento(BST::node*& bst, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore) {
 	long timeS, timeE;
 	int c = 0, c1 = 0;
 	timeS = nanosec();
@@ -213,4 +213,4 @@ double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long
 		c++;
 	} while (timeE - timeS <= risoluzione * (1.0 / erroreMinimo) + 1.0);
 	return ((timeE - timeS) / c) / c1;
-}*/
+}

@@ -92,22 +92,31 @@ namespace RBT{
 
 
 
+       /*
+		EFFETTO:		Cerca una certa chiave all'interno dell'albero
+		FUNZIONAMENTO:	key1 <= root < key2
+		DESCRIZIONE:	find k: trova nell'albero il nodo con chiave numerica k e restituisce il valore 
+						(di tipo stringa) associato a tale nodo (come sopra, si assuma che tale nodo esista)
+		*/
+		static node* find(node *root, int key) {
+			node* iter = root;
+			//Ricerco il nodo
+			while (iter != nullptr && iter->key != key)
+				if (iter->key < key) iter = iter->right;
+				else iter = iter->left;
+
+			return iter;
+		}
+
+		
         /*
-        EFFETTO:        Cerca una certa chiave all'interno dell'albero
-        FUNZIONAMENTO:  key1 <= root < key2
-        DESCRIZIONE:    find k: trova nell'albero il nodo con chiave numerica k e restituisce il valore
-                        (di tipo stringa) associato a tale nodo (come sopra, si assuma che tale nodo esista)
+        EFFETTO: Ritorna vero se l'elemento è presente
         */
-        static node* find(node* root, int key) {
-            node* iter = root;
-            //Ricerco il nodo
-            while (iter->key != key)
-                if (iter->key < key) iter = iter->right;
-                else iter = iter->left;
-
-            return iter;
+        static bool contains(node* root, int key){
+            if(node::find(root, key) == nullptr) return false;
+            return true; 
         }
-
+        
         /*
         EFFETTO:        Elimita tutto l'albero compresa la root
         FUNZIONAMENTO:  POSTORDER
