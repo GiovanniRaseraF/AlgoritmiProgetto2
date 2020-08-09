@@ -89,11 +89,10 @@ int main() {
 	//BST::node* bst = BST::node::create(10, stringaSempre);
 
 	//Campionamento
-	long minSize = 432876;
+	long minSize = 100;
 	long maxSize = MAX_VAL;
-	long samples = 10;
+	long samples = 100;
 	int numeroElementi = 0, prevNumeroElementi = 0;
-	int initialRepetition = 1000;
 	int numeroIterazioni = 50;
 
 	//Calcolo dei tempi
