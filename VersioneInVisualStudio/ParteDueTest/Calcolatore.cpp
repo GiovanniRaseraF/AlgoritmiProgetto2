@@ -47,10 +47,30 @@ const string stringaSempre = "t";
 EFFETTO: Esegue gli inserimeti all'interno dell'albero e
 ritorna il tempo che ci mette a fare l'operazione
 */
-double inserimento(AVL::node* avl, int repetitionsCounter, double erroreMassimolong, long risoluzione, Prepara* vettore);
+double inserimento(AVL::node*& avl, int repetitionsCounter, double erroreMassimolong, long risoluzione, Prepara* vettore);
 //double inserimento(BST::node* bst, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore);
 
 double calcolaDeviazione(vector<double> tempi, double, int repetitionsCounter);
+/*
+int main() {
+	AVL::node* avl = AVL::node::create(-1, stringaSempre);
+	cin.get();
+	cout << "Sto caricando gli elementi..." << endl;
+	for (int i = 0; i < 6000000; i++) {
+		avl = AVL::node::insert(avl, i, stringaSempre);
+	}
+	cout << "Caricati" << endl;
+	
+	cin.get();
+
+	cout << "Sto eliminando gli elementi.." << endl;
+	avl = AVL::node::clear(avl);
+	cout << "Eliminati";
+
+	cin.get();
+	cin.get();
+	return 0;
+}*/
 
 
 int main() {
@@ -89,7 +109,7 @@ int main() {
 		vector<double> tempMemAVL{};
 		for (int iter = 0; iter < numeroIterazioni; iter++) {
 			//Pulizia dell'albero
-			AVL::node::clear(avl);
+			avl = AVL::node::clear(avl);
 			avl = nullptr;
 			//Conto il tempo che ci metto a fare gli iserimenti
 			double start = inserimento(avl, numeroElementi, erroreMassimo, risoluzione, vettore);
@@ -101,7 +121,7 @@ int main() {
 
 		//Calcolo del tempo ammortizzato
 		double tempoAmmortizzatoAVL = (double)totalTimeAVL / (double)numeroIterazioni;
-		double deviazioneAVL = 0;calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
+		double deviazioneAVL = 0;//calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
 
 		
 		
@@ -153,7 +173,7 @@ double calcolaDeviazione(vector<double> tempi, double tempoammortizzato, int rep
 }
 
 
-double inserimento(AVL::node* avl, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore) {
+double inserimento(AVL::node*& avl, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore) {
 	long timeS, timeE;
 	int c = 0, c1 = 0;
 	timeS = nanosec();
@@ -164,7 +184,7 @@ double inserimento(AVL::node* avl, int numeroElementi, double erroreMinimo, long
 				c1++;
 			}
 			else if (!AVL::node::contains(avl, vettore->at(i))) {
-				AVL::node::insert(avl, vettore->at(i), stringaSempre);
+				avl = AVL::node::insert(avl, vettore->at(i), stringaSempre);
 				c1++;
 			}
 		}

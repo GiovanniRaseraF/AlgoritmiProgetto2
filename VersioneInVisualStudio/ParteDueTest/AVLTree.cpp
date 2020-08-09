@@ -175,14 +175,13 @@ namespace AVL{
             if (root == nullptr) return nullptr;
             //Elimino la le foglie
             if (root->left == nullptr && root->right == nullptr) {
-                delete(root);
-                root = nullptr;
+                delete root;
                 return nullptr;
             }
             else {
                 //Elimino ricorsivamente i figli
-                if (root->left != nullptr) root->left = clear(root->left);
-                if (root->right != nullptr) root->right = clear(root->right);
+                root->left = clear(root->left);
+                root->right = clear(root->right);
                 //Elimino la root
                 return clear(root);
                 
@@ -274,6 +273,7 @@ namespace AVL{
 //Main
 int main() {
     //Inizializzazione della RBT
+    using namespace AVL;
     node* rbt = nullptr;
 
     //LOOP DELLE OPZIONI
