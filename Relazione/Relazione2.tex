@@ -92,8 +92,16 @@
 			\subsection{Analisi e calcolo tempi}
 			\newpage
 		\section{Algortimo per il calcolo dei tempi}
-	
-	
-	
+		Viene eseguita una stima dei tempi medi e \textbf{ammortizzati} per l'esecuzione di \textbf{n} operazioni, sia di inserimento che di ricerca, nelle tre strutture dati viste precedentemente. \\
+		Viene scelto inizialmente un parametro \textbf{n} che corrisponde al numero di operazioni che vogliamo che vengano fatte su un albero inizialmente vuoto. Le operazioni che vengono eseguite sono:
+		\begin{enumerate}
+			\item \textbf{generazione in modo pseudo-casuale del valore k};
+			\item \textbf{ricerca di un nodo con chiave k};
+			\item \textbf{qualora esso non esista, si crea un nuovo nodo con chiave k e lo si inserisce all'interno della struttura};
+			\item \textbf{gestione della memoria:} ad ogni iterazione la memoria viene cancellata grazie ai metodi \textit{clear} presenti dentro al codice degli alberi.
+		\end{enumerate}
+		Infine abbiamo che il tempo ammortizzato di tutte le operazione eseguite è il risultato dato da il \textit{tempo totale impiegato per l'esecuzione delle operazioni diviso il parametro n}.\\
+		Abbiamo ottenuto quindi un tempo ammortizzato che ha un errore relativo che non supera mai 
+		\textbf{l'1\%}
 	
 \end{document}
