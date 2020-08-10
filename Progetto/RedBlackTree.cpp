@@ -460,7 +460,7 @@ namespace RBT{
 
 
     //Function Wrapper
-    class Tree : Lambda{
+    class Tree : public Lambda{
         public:
         node* root;
 

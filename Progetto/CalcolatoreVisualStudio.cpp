@@ -47,7 +47,8 @@ const string stringaSempre = "t";
 EFFETTO: Esegue gli inserimeti all'interno dell'albero e
 ritorna il tempo che ci mette a fare l'operazione
 */
-double inserimento(Lambda*& tree, double Tmin, Prepara* vettore);
+double inserimento(Lambda* tree, double Tmin, int numeroElementi, Prepara* vettore);
+double* calcolatore(Lambda* tree, double tMin, int numeroElementi, Prepara* vettore);
 double calcolaDeviazione(vector<double> tempi, double, int repetitionsCounter);
 
 int main() {
@@ -71,7 +72,7 @@ int main() {
 	long maxSize = MAX_VAL;
 	long samples = 100;
 	int numeroElementi = 0, prevNumeroElementi = 0;
-	int numeroIterazioni = 50;
+	
 
 	//Calcolo dei tempi
 	for (int i = 0; i < samples; i++) {
@@ -82,22 +83,10 @@ int main() {
 		numeroElementi = round(coefficiente * pow(base, i));
 
 		//AVL Tree
-		long totalTimeAVL = 0;
-		vector<double> tempMemAVL;
-		for (int iter = 0; iter < numeroIterazioni; iter++) {
-			//Pulizia dell'albero
-			avl->clear();
-			//Conto il tempo che ci metto a fare gli iserimenti
-			double start = inserimento(avl, tMin, vettore);
-			//Somma dei tempo
-			totalTimeAVL += start;
-			//Salvataggio del tempo per calcolo della varianza
-			tempMemAVL.push_back(start);
-		}
-
+		double *AVLres = calcolatore(avl, tMin, numeroElementi, vettore);
 		//Calcolo del tempo ammortizzato
-		double tempoAmmortizzatoAVL = (double)totalTimeAVL / numeroIterazioni;
-		double deviazioneAVL = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
+		double tempoAmmortizzatoAVL = AVLres[0];
+		double deviazioneAVL = AVLres[1];
 
 	
 		//BS Tree
@@ -121,7 +110,28 @@ double calcolaDeviazione(vector<double> tempi, double tempoammortizzato, int rep
 	return (sqrt(deviazione / repetitionsCounter));
 }
 
-double inserimento(Lambda*& tree, double tMin, Prepara* vettore) {
+double* calcolatore(Lambda* tree, double tMin, int numeroElementi, Prepara* vettore){
+	int numeroIterazioni = 50;
+	long totalTime = 0;
+		vector<double> tempMem;
+		for (int iter = 0; iter < numeroIterazioni; iter++) {
+			//Pulizia dell'albero
+			tree->clear();
+			//Conto il tempo che ci metto a fare gli iserimenti
+			double start = inserimento(tree, tMin, numeroElementi, vettore);
+			//Somma dei tempo
+			totalTime += start;
+			//Salvataggio del tempo per calcolo della varianza
+			tempMem.push_back(start);
+		}
+
+		//Calcolo del tempo ammortizzato
+		double tempoAmmortizzato = (double)totalTime / numeroIterazioni;
+		double deviazione = calcolaDeviazione(tempMem, tempoAmmortizzato, numeroElementi);
+		return new double[2]{tempoAmmortizzato, deviazione};
+}
+
+double inserimento(Lambda* tree, double tMin, int numeroElementi, Prepara* vettore) {
 	long timeS, timeE;
 	int c = 0, c1 = 0;
 	timeS = nanosec();

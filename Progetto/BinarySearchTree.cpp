@@ -164,7 +164,7 @@ namespace BST{
 	};
 
 	//Function Wrapper
-    class Tree : Lambda{
+    class Tree : public Lambda{
         public:
 
         node* root;
