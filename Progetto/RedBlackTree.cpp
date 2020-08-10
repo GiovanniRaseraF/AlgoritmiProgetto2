@@ -3,6 +3,7 @@
 #include <math.h>
 #include <algorithm>
 #include <sstream>
+#include "Lambda.h"
 
 using namespace std;
 namespace RBT{
@@ -126,7 +127,7 @@ namespace RBT{
             if (root == nullptr) return nullptr;
             //Elimino la le foglie
             if (root->left == nullptr && root->right == nullptr) {
-                delete(root);
+                delete root;
                 return nullptr;
             }
             else {
@@ -456,79 +457,25 @@ namespace RBT{
             return res;
         }
     };
+
+
+    //Function Wrapper
+    class Tree : Lambda{
+        public:
+        node* root = nullptr;
+
+        void insert(int key, const string& val) override { 
+            if(root == nullptr)     root = node::create(key, val);
+            else                    root = node::insert(root, key, val);
+        }
+
+        void clear() override {
+            node::clear(this->root);
+            this->root = nullptr;
+        }
+
+        bool contains(int key) override {
+            return node::contains(this->root, key);
+        }
+    };
 }
-/*
-int main() {
-    //Inizializzazione della RBT
-    node* rbt = nullptr;
-
-    //LOOP DELLE OPZIONI
-    bool finito = false;
-    string line = "", opzione = "";
-
-    while (!finito) {
-        //std::cout << "Opzione:>>";
-        getline(std::cin, line);
-        std::istringstream s(line);
-        s >> opzione;
-        if (opzione == "exit") { finito = true; }
-
-        else if (opzione == "insert") {
-            string val;
-            int key = 0;
-            s >> key;
-            s >> val;
-
-            if (rbt == nullptr)     rbt = node::create(key, val);
-            else                    rbt = node::insert(rbt, key, val);
-
-        }
-
-        else if (opzione == "show") {
-            node::show(rbt);
-            cout << "" << endl;
-        }
-
-        else if (opzione == "find") {
-            int key = 0;
-            s >> key;
-
-            node* res = node::find(rbt, key);
-            cout << res->val;
-            cout << "" << endl;
-        }
-
-        else if (opzione == "remove") {
-            int key = 0;
-            s >> key;
-
-            rbt = node::remove(rbt, key);
-        }
-
-        else if (opzione == "left") {
-            int key = 0;
-            s >> key;
-
-            node* toRotate = node::find(rbt, key);
-            rbt = node::rotateL(rbt, toRotate);
-        }
-        else if (opzione == "right") {
-            int key = 0;
-            s >> key;
-
-            node* toRotate = node::find(rbt, key);
-            rbt = node::rotateR(rbt, toRotate);
-        }
-
-        else if (opzione == "check") {
-            cout << ((node::check(rbt))? "GOOD" : "BAD!!!!");
-            cout << endl;
-        }
-
-        else if(opzione =="exit") { finito = true; }
-
-        opzione = "";
-    }
-    return 0;
-}
-*/

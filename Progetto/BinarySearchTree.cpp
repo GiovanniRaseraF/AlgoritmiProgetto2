@@ -162,6 +162,26 @@ namespace BST{
 		}
 
 	};
+
+	//Function Wrapper
+    class Tree : Lambda{
+        public:
+        node* root = nullptr;
+
+        void insert(int key, const string& val) override { 
+            if(root == nullptr)     root = node::create(key, val);
+            else                    node::insert(root, key, val);
+        }
+
+        void clear() override {
+            node::clear(this->root);
+            this->root = nullptr;
+        }
+
+        bool contains(int key) override {
+            return node::contains(this->root, key);
+        }
+    };
 }
 
 /*

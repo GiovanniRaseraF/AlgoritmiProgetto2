@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-I.
+CFLAGS=-I -Wc++11-extensions.
 DEPS = Lambda.h Utils.h
 
 %.o: %.cpp $(DEPS)
@@ -10,7 +10,6 @@ calcmake:  Calcolatore.o
 
 vscalc:  CalcolatoreVisualStudio.o 
 	$(CC) -o vscalcolatore  CalcolatoreVisualStudio.o
-	
 
 clean:
 	rm *.o

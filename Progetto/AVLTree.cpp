@@ -19,7 +19,7 @@ namespace AVL{
                         - b(n)=h(n.l)-h(n.r)  
     */
 
-    class node : Lambda{
+    class node{
     public:
         //Attributi
         int key;
@@ -266,6 +266,26 @@ namespace AVL{
             return root;  
         }  
         
+    };
+
+    //Function Wrapper
+    class Tree : Lambda{
+        public:
+        node* root = nullptr;
+
+        void insert(int key, const string& val) override { 
+            if(root == nullptr)     root = node::create(key, val);
+            else                    root = node::insert(root, key, val);
+        }
+
+        void clear() override {
+            node::clear(this->root);
+            this->root = nullptr;
+        }
+
+        bool contains(int key) override {
+            return node::contains(this->root, key);
+        }
     };
 }
 

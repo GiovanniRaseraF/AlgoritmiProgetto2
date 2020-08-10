@@ -105,7 +105,7 @@ int main() {
 
 		//AVL Tree
 		long totalTimeAVL = 0;
-		vector<double> tempMemAVL{};
+		vector<double> tempMemAVL;
 		for (int iter = 0; iter < numeroIterazioni; iter++) {
 			//Pulizia dell'albero
 			avl = AVL::node::clear(avl);
@@ -123,11 +123,9 @@ int main() {
 		double deviazioneAVL = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
 
 		
-		
-		
 		//BS Tree
 		long totalTimeBST = 0;
-		vector<double> tempMemBST{};
+		vector<double> tempMemBST;
 		for (int iter = 0; iter < numeroIterazioni; iter++) {
 			//Pulizia dell'albero
 			bst = BST::node::clear(bst);
