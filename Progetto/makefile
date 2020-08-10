@@ -5,7 +5,7 @@ DEPS = Lambda.h Utils.h
 %.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-calcmake:  Calcolatore.o 
+calc:  Calcolatore.o 
 	$(CC) -o calcolare  Calcolatore.o
 
 vscalc:  CalcolatoreVisualStudio.o 

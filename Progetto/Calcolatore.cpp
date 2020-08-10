@@ -4,7 +4,6 @@
 #include <vector>
 #include <fstream>
 #include "Lambda.h"
-#include "Utils.h"
 #include "Prepara.cpp"
 #include "AVLTree.cpp"
 #include "BinarySearchTree.cpp"
@@ -16,8 +15,143 @@
 using namespace std;
 using namespace std::chrono;
 typedef duration<long, nanoseconds::period> nanosecondi;
+const string stringaSempre = "t";
 
 //FUNZIONI:
+long getDuration(steady_clock::time_point start, steady_clock::time_point end);
+long getResolution();
+long getRobustResolution();
+long nanosec() { return duration_cast<nanosecondi>(steady_clock::now().time_since_epoch()).count(); }
+double calcolaDeviazione(vector<double> tempi, double, int repetitionsCounter);
+double inserimento(Lambda*& tree, double Tmin, int numeroElementi, Prepara* vettore);
+double* calcolatore(Lambda*& tree, double tMin, int numeroElementi, Prepara* vettore);
+
+
+
+int main() {
+	Lambda* avl = new RBT::Tree();
+	cin.get();
+	cout << "Sto caricando gli elementi..." << endl;
+	for (int i = 0; i < 10000000; i++) {
+		avl->insert(i, stringaSempre);
+	}
+	cout << "Caricati" << endl;
+	
+	cin.get();
+
+	//RBT::node::show(((RBT::Tree*)avl)->root);
+	cout << "\nSto eliminando gli elementi.." << endl;
+	avl->clear();
+	cout << "Eliminati"<<endl;
+	RBT::node::show(((RBT::Tree*)avl)->root);
+
+	cin.get();
+	cin.get();
+	return 0;
+}
+
+//MAIN
+int mainn() {
+	//Calcolo la granularit�
+	long risoluzione = getRobustResolution();
+	double erroreMassimo = 0.01;					//1%
+	double tMin = risoluzione / erroreMassimo + risoluzione;
+
+	//Lambda
+	Prepara* vettore = new Prepara(MAX_VAL);
+
+	//Tree
+	Lambda* avl = new AVL::Tree();
+	Lambda* bst = new BST::Tree();
+	Lambda* rbt = new RBT::Tree();
+
+	//Campionamento
+	long minSize = 1000;
+	long maxSize = MAX_VAL;
+	long samples = 100;
+	int numeroElementi = 0, prevNumeroElementi = 0;
+	
+	//Calcolo dei tempi
+	for (int i = 0; i < samples; i++) {
+		//Calcolo il numero di elementi
+		double base = exp((log(maxSize) - log(minSize)) / (samples - 1));
+		long coefficiente = minSize;
+		prevNumeroElementi = numeroElementi;
+		numeroElementi = round(coefficiente * pow(base, i));
+
+		//BST AVL RBT
+		double* BSTres = calcolatore(bst, tMin, numeroElementi, vettore);
+		double* AVLres = calcolatore(avl, tMin, numeroElementi, vettore);
+		double* RBTres = calcolatore(rbt, tMin, numeroElementi, vettore);//new double[2]{0,0};
+
+		double tBST = BSTres[0], dBST = BSTres[1];
+		double tAVL = AVLres[0], dAVL = AVLres[1];
+		double tRBT = RBTres[0], dRBT = RBTres[1];
+		
+		//Stampa
+		cout << numeroElementi << " " << tBST << " " << dBST << " " << tAVL << " " << dAVL << " " << tRBT << " " << dRBT << endl;
+		vettore->riprepara(numeroElementi);
+	}
+
+	return 0;
+}
+
+
+//IMPLEMENTAZIONE:
+double calcolaDeviazione(vector<double> tempi, double tempoammortizzato, int repetitionsCounter) {
+	double deviazione = 0;
+	for (double time : tempi) deviazione += pow(time - tempoammortizzato, 2);
+	return (sqrt(deviazione / repetitionsCounter));
+}
+
+/*
+EFFETTO: Ritorna il valore del tempo ammortizzato e la deviazione
+*/
+double* calcolatore(Lambda*& tree, double tMin, int numeroElementi, Prepara* vettore){
+	int numeroIterazioni = 50;
+	long totalTime = 0;
+		vector<double> tempMem;
+		for (int iter = 0; iter < numeroIterazioni; iter++) {
+			//Pulizia dell'albero
+			tree->clear();
+			//Conto il tempo che ci metto a fare gli iserimenti
+			double start = inserimento(tree, tMin, numeroElementi, vettore);
+			//Somma dei tempo
+			totalTime += start;
+			//Salvataggio del tempo per calcolo della varianza
+			tempMem.push_back(start);
+		}
+
+		//Calcolo del tempo ammortizzato
+		double tempoAmmortizzato = (double)totalTime / numeroIterazioni;
+		double deviazione = calcolaDeviazione(tempMem, tempoAmmortizzato, numeroElementi);
+		return new double[2]{tempoAmmortizzato, deviazione};
+}
+
+/*
+EFFETTO: Esegue gli inserimeti all'interno dell'albero e ritorna il tempo che ci mette a fare l'operazione
+*/
+double inserimento(Lambda*& tree, double tMin, int numeroElementi, Prepara* vettore) {
+	long timeS, timeE;
+	int c = 0, c1 = 0;
+	timeS = nanosec();
+
+	do {
+		for (int i = 0; i < numeroElementi; i++) {
+			if (!tree->contains(vettore->at(i))) {
+				tree->insert(vettore->at(i), stringaSempre);
+				c1++;
+			}
+		}
+		timeE = nanosec();
+		c++;
+	} while (timeE - timeS <= tMin);
+
+	return ((timeE - timeS) / c) / c1;
+}
+
+
+
 long getDuration(steady_clock::time_point start, steady_clock::time_point end) {
 	return duration_cast<nanosecondi>(end - start).count();
 }
@@ -36,120 +170,4 @@ long getRobustResolution() {
 		res[i] = getResolution();
 	std::sort(res.begin(), res.end());
 	return res[res.size() / 2];
-}
-
-/*
-EFFETTO: nanosecondi
-*/
-long nanosec() { return duration_cast<nanosecondi>(steady_clock::now().time_since_epoch()).count(); }
-
-
-/*
-EFFETTO: Esegue gli inserimeti all'interno dell'albero e 
-ritorna il tempo che ci mette a fare l'operazione
-*/
-long inserimento(AVL::node* avl, int repetitionsCounter, double erroreMassimolong, long risoluzione, Prepara* vettore);
-
-
-double calcolaDeviazione(vector<long> tempi,double, int repetitionsCounter);
-
-int main() {
-
-	//Calcolo la granularit�
-	long risoluzione = getRobustResolution();
-	double erroreMassimo = 0.01;					//1%
-	double tMin = risoluzione / erroreMassimo + risoluzione;
-
-	//Lambda
-	Prepara* vettore = new Prepara(MAX_VAL);
-
-	//Tree
-	AVL::node* avl = AVL::node::create(10, "hello");
-
-	//Campionamento
-	long minSize = 100;
-	long maxSize = MAX_VAL;
-	long samples = 100;
-	int numeroElementi = 0, prevNumeroElementi = 0;
-	int initialRepetition = 1000;
-	int numeroIterazioni = 50;
-
-	//Calcolo dei tempi
-	for (int i = 0; i < samples; i++) {
-		//Calcolo il numero di elementi
-		double base = exp((log(maxSize) - log(minSize)) / (samples - 1));
-		long coefficiente = minSize;
-		prevNumeroElementi = numeroElementi;
-		numeroElementi = round(coefficiente * pow(base, i));
-
-		//AVL Tree
-        long totalTimeAVL = 0;
-		vector<long> tempMemAVL{};
-		for(int iter = 0; iter < numeroIterazioni; iter++){
-			//Pulizia dell'albero
-			AVL::node::clear(avl);
-			avl = nullptr;
-			//Conto il tempo che ci metto a fare gli iserimenti
-			long start = inserimento(avl, numeroElementi, erroreMassimo, risoluzione, vettore);
-			//Somma dei tempo
-			totalTimeAVL += start;
-			//Salvataggio del tempo per calcolo della varianza
-			tempMemAVL.push_back(start);
-		}
-
-		//Calcolo del tempo ammortizzato
-		double tempoAmmortizzatoAVL = (double)totalTimeAVL / (double)numeroElementi;
-		double deviazioneAVL = calcolaDeviazione(tempMemAVL, tempoAmmortizzatoAVL, numeroElementi);
-
-		cout<<numeroElementi<<" "<<tempoAmmortizzatoAVL<<" "<<deviazioneAVL<<endl;
-		//HEAP
-		
-
-		//MOM
-		
-
-		
-
-		//Stampa
-		vettore->riprepara(MAX_VAL);
-		
-
-	}
-
-	return 0;
-}
-
-
-
-//IMPLEMENTAZIONE:
-
-double calcolaDeviazione(vector<long> tempi, double tempoammortizzato, int repetitionsCounter){
-	double deviazione = 0;
-	for (double time : tempi) {
-		deviazione += pow(time - tempoammortizzato, 2);
-	}
-
-	return (sqrt(deviazione / repetitionsCounter));
-}
-
-
-long inserimento(AVL::node* avl, int numeroElementi, double erroreMinimo, long risoluzione, Prepara* vettore){
-	long timeS, timeE;
-	int c = 0, c1 = 0;
-	timeS = nanosec();
-	do {
-		for (int i = 0; i < numeroElementi; i++) {
-			if(avl == nullptr) {
-				avl = AVL::node::create(vettore->at(i),  "test");
-				c1++;
-			}
-			else if (AVL::node::contains(avl, vettore->at(i))) {
-                AVL::node::insert(avl, vettore->at(i),  "test");
-                c1++;
-            }
-        }
-		timeE = nanosec();
-		c++;
-	} while (timeE - timeS <= risoluzione * (1.0 / erroreMinimo) + 1.0);
-	return ((timeE - timeS) / c) / c1;
 }

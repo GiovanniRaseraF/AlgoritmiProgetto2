@@ -15,44 +15,19 @@
 using namespace std;
 using namespace std::chrono;
 typedef duration<long, nanoseconds::period> nanosecondi;
-
-//FUNZIONI:
-long getDuration(steady_clock::time_point start, steady_clock::time_point end) {
-	return duration_cast<nanosecondi>(end - start).count();
-}
-
-long getResolution() {
-	steady_clock::time_point start = steady_clock::now(), end;
-	do {
-		end = steady_clock::now();
-	} while (start == end);
-	return getDuration(start, end);
-}
-
-long getRobustResolution() {
-	vector<long> res(1000);
-	for (int i = 0; i < 1000; i++)
-		res[i] = getResolution();
-	std::sort(res.begin(), res.end());
-	return res[res.size() / 2];
-}
-
-/*
-EFFETTO: nanosecondi
-*/
-long nanosec() { return duration_cast<nanosecondi>(steady_clock::now().time_since_epoch()).count(); }
 const string stringaSempre = "t";
 
-/*
-EFFETTO: Esegue gli inserimeti all'interno dell'albero e
-ritorna il tempo che ci mette a fare l'operazione
-*/
-double inserimento(Lambda* tree, double Tmin, int numeroElementi, Prepara* vettore);
-double* calcolatore(Lambda* tree, double tMin, int numeroElementi, Prepara* vettore);
+//FUNZIONI:
+long getDuration(steady_clock::time_point start, steady_clock::time_point end);
+long getResolution();
+long getRobustResolution();
+long nanosec() { return duration_cast<nanosecondi>(steady_clock::now().time_since_epoch()).count(); }
 double calcolaDeviazione(vector<double> tempi, double, int repetitionsCounter);
+double inserimento(Lambda*& tree, double Tmin, int numeroElementi, Prepara* vettore);
+double* calcolatore(Lambda*& tree, double tMin, int numeroElementi, Prepara* vettore);
 
+//MAIN
 int main() {
-
 	//Calcolo la granularit�
 	long risoluzione = getRobustResolution();
 	double erroreMassimo = 0.01;					//1%
@@ -62,10 +37,9 @@ int main() {
 	Prepara* vettore = new Prepara(MAX_VAL);
 
 	//Tree
-	AVL::Tree* avl = new AVL::Tree();
-	BST::Tree* bst = new BST::Tree();
-	RBT::Tree* rbt = new RBT::Tree();
-
+	Lambda* avl = new AVL::Tree();
+	Lambda* bst = new BST::Tree();
+	Lambda* rbt = new RBT::Tree();
 
 	//Campionamento
 	long minSize = 1000;
@@ -73,7 +47,6 @@ int main() {
 	long samples = 100;
 	int numeroElementi = 0, prevNumeroElementi = 0;
 	
-
 	//Calcolo dei tempi
 	for (int i = 0; i < samples; i++) {
 		//Calcolo il numero di elementi
@@ -82,18 +55,17 @@ int main() {
 		prevNumeroElementi = numeroElementi;
 		numeroElementi = round(coefficiente * pow(base, i));
 
-		//AVL Tree
-		double *AVLres = calcolatore(avl, tMin, numeroElementi, vettore);
-		//Calcolo del tempo ammortizzato
-		double tempoAmmortizzatoAVL = AVLres[0];
-		double deviazioneAVL = AVLres[1];
+		//BST AVL RBT
+		double* BSTres = calcolatore(bst, tMin, numeroElementi, vettore);
+		double* AVLres = calcolatore(avl, tMin, numeroElementi, vettore);
+		double* RBTres = calcolatore(rbt, tMin, numeroElementi, vettore);//new double[2]{0,0};
 
-	
-		//BS Tree
-		//RB Tree
-
+		double tBST = BSTres[0], dBST = BSTres[1];
+		double tAVL = AVLres[0], dAVL = AVLres[1];
+		double tRBT = RBTres[0], dRBT = RBTres[1];
+		
 		//Stampa
-		cout << numeroElementi << " " << tempoAmmortizzatoAVL << " " << deviazioneAVL << endl;
+		cout << numeroElementi << " " << tBST << " " << dBST << " " << tAVL << " " << dAVL << " " << tRBT << " " << dRBT << endl;
 		vettore->riprepara(numeroElementi);
 	}
 
@@ -101,16 +73,17 @@ int main() {
 }
 
 
-
 //IMPLEMENTAZIONE:
-
 double calcolaDeviazione(vector<double> tempi, double tempoammortizzato, int repetitionsCounter) {
 	double deviazione = 0;
 	for (double time : tempi) deviazione += pow(time - tempoammortizzato, 2);
 	return (sqrt(deviazione / repetitionsCounter));
 }
 
-double* calcolatore(Lambda* tree, double tMin, int numeroElementi, Prepara* vettore){
+/*
+EFFETTO: Ritorna il valore del tempo ammortizzato e la deviazione
+*/
+double* calcolatore(Lambda*& tree, double tMin, int numeroElementi, Prepara* vettore){
 	int numeroIterazioni = 50;
 	long totalTime = 0;
 		vector<double> tempMem;
@@ -131,7 +104,10 @@ double* calcolatore(Lambda* tree, double tMin, int numeroElementi, Prepara* vett
 		return new double[2]{tempoAmmortizzato, deviazione};
 }
 
-double inserimento(Lambda* tree, double tMin, int numeroElementi, Prepara* vettore) {
+/*
+EFFETTO: Esegue gli inserimeti all'interno dell'albero e ritorna il tempo che ci mette a fare l'operazione
+*/
+double inserimento(Lambda*& tree, double tMin, int numeroElementi, Prepara* vettore) {
 	long timeS, timeE;
 	int c = 0, c1 = 0;
 	timeS = nanosec();
@@ -148,4 +124,26 @@ double inserimento(Lambda* tree, double tMin, int numeroElementi, Prepara* vetto
 	} while (timeE - timeS <= tMin);
 
 	return ((timeE - timeS) / c) / c1;
+}
+
+
+
+long getDuration(steady_clock::time_point start, steady_clock::time_point end) {
+	return duration_cast<nanosecondi>(end - start).count();
+}
+
+long getResolution() {
+	steady_clock::time_point start = steady_clock::now(), end;
+	do {
+		end = steady_clock::now();
+	} while (start == end);
+	return getDuration(start, end);
+}
+
+long getRobustResolution() {
+	vector<long> res(1000);
+	for (int i = 0; i < 1000; i++)
+		res[i] = getResolution();
+	std::sort(res.begin(), res.end());
+	return res[res.size() / 2];
 }

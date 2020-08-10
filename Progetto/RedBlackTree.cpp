@@ -119,27 +119,26 @@ namespace RBT{
         }
         
         /*
-        EFFETTO:        Elimita tutto l'albero compresa la root
-        FUNZIONAMENTO:  POSTORDER
-        DESCRIZIONE:    clear: rimuove tutti i nodi dall'albero, che diventer quindi vuoto
-        */
-        static node* clear(node* root) {
-            if (root == nullptr) return nullptr;
-            //Elimino la le foglie
-            if (root->left == nullptr && root->right == nullptr) {
-                delete root;
-                return nullptr;
-            }
-            else {
-                //Elimino ricorsivamente i figli
-                if (root->left != nullptr) root->left = clear(root->left);
-                if (root->right != nullptr) root->right = clear(root->right);
-                //Elimino la root
-                return clear(root);
-
-            }
-        }
-
+		EFFETTO:		Elimita tutto l'albero compresa la root
+		FUNZIONAMENTO:	POSTORDER
+		DESCRIZIONE:	clear: rimuove tutti i nodi dall'albero, che diventer� quindi vuoto
+		*/
+		static node* clear(node *root) {
+			if (root == nullptr) return nullptr;
+			//Elimino la le foglie
+			if (root->left == nullptr && root->right == nullptr) {
+				delete root;
+				return nullptr;
+			}
+			else {
+				//Elimino ricorsivamente i figli
+				if (root->left != nullptr) root->left = clear(root->left);
+				if (root->right != nullptr) root->right = clear(root->right);
+				//Elimino la root
+				return clear(root);
+				
+			}
+		}
         /*
         EFFETTO:        esegue una visita nell'albero
         FUNZIONAMENTO:  PREORDER
@@ -473,8 +472,8 @@ namespace RBT{
         }
 
         void clear() override {
-            node::clear(this->root);
-            this->root = nullptr;
+            this->root = RBT::node::clear(this->root);
+            
         }
 
         bool contains(int key) override {
