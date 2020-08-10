@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-I -Wc++11-extensions.
+CFLAGS=-I.
 DEPS = Lambda.h Utils.h
 
 %.o: %.cpp $(DEPS)

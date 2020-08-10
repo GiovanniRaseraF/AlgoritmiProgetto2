@@ -271,8 +271,11 @@ namespace AVL{
     //Function Wrapper
     class Tree : Lambda{
         public:
-        node* root = nullptr;
+        node* root;
 
+        Tree(){
+            this->root = nullptr;
+        }
         void insert(int key, const string& val) override { 
             if(root == nullptr)     root = node::create(key, val);
             else                    root = node::insert(root, key, val);
