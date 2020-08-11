@@ -91,11 +91,11 @@ double* calcolatore(Lambda*& tree, double tMin, int numeroElementi, Prepara* vet
 	for (int iter = 0; iter < numeroIterazioni; iter++) {
 		//Pulizia dell'albero
 		tree->clear();
-		//Conto il tempo che ci metto a fare gli iserimenti
+		//Conto il tempo che ci metto a fare gli inserimenti
 		double start = inserimento(tree, tMin, numeroElementi, vettore);
 		//Somma dei tempo
 		totalTime += start;
-		//Salvataggio del tempo per calcolo della varianza
+		//Salvataggio del tempo per calcolo della deviazione
 		tempMem.push_back(start);
 	}
 
