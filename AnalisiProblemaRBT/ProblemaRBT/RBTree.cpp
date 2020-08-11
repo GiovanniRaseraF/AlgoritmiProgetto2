@@ -1,5 +1,7 @@
 
 #include <iostream>
+#include <sstream>
+#include <string>
 using namespace std;
 
 enum Color { RED, BLACK };
@@ -10,6 +12,7 @@ public:
     string val;
     bool color;
     node* left,* right,* father;
+
 
     // Constructor 
     node(int key, const string& val){
@@ -173,8 +176,7 @@ void Tree::fixViolation(node*& root, node*& pt){
 }
 
 // Function to insert a new node with given data 
-void Tree::insert(const int& key, const string& val)
-{
+void Tree::insert(const int& key, const string& val){
     node* pt = new node(key, val);
 
     // Do a normal BST insert 
@@ -182,6 +184,7 @@ void Tree::insert(const int& key, const string& val)
 
     // fix Red Black Tree violations 
     fixViolation(root, pt);
+
 }
 
 
@@ -200,6 +203,22 @@ static node* clear(node* root) {
         return clear(root);
 
     }
+}
+
+/*
+        EFFETTO:		Cerca una certa chiave all'interno dell'albero
+        FUNZIONAMENTO:	key1 <= root < key2
+        DESCRIZIONE:	find k: trova nell'albero il nodo con chiave numerica k e restituisce il valore
+                        (di tipo stringa) associato a tale nodo (come sopra, si assuma che tale nodo esista)
+        */
+static node* find(node* root, int key) {
+    node* iter = root;
+    //Ricerco il nodo
+    while (iter != nullptr && iter->key != key)
+        if (iter->key < key) iter = iter->right;
+        else iter = iter->left;
+
+    return iter;
 }
 
 
@@ -237,13 +256,79 @@ static bool check(node*& root) {
 
     return res;
 }
+
+/*
+      EFFETTO:        esegue una visita nell'albero
+      FUNZIONAMENTO:  PREORDER
+      DESCRIZIONE:    show: visualizza l'albero corrente
+      */
+static void show(node* root) {
+    if (root == nullptr)            cout << "NULL ";
+    else {
+        string col;
+        if (root->color == 0) col = "RED";
+        else col = "BLACK";
+        cout << root->key << ":" << root->val << ":" << col << " ";
+        show(root->left);
+        show(root->right);
+    }
+}
+
     
 
 
 
+int main() {
+    //Inizializzazione della BST
+    Tree bst;
+
+    //LOOP DELLE OPZIONI
+    bool finito = false;
+    string line = "", opzione = "";
+
+    while (!finito) {
+        //std::cout << "Opzione:>>";
+        getline(std::cin, line);
+        std::istringstream s(line);
+        s >> opzione;
+        if (opzione == "exit") { finito = true; }
+
+        else if (opzione == "insert") {
+            string val;
+            int key = 0;
+            s >> key;
+            s >> val;
+
+            bst.insert(key, val);
+      
+            cout << "" << endl;
+        }
+
+        else if (opzione == "show") {
+            show(bst.root);
+            cout << "" << endl;
+        }
+
+        else if (opzione == "find") {
+            int key = 0;
+            s >> key;
+
+            node* res = find(bst.root, key);
+            cout << res->val;
+            cout << "" << endl;
+        }
+
+
+        else { finito = true; }
+    }
+    return 0;
+}
+
+
 
 // Driver Code 
-int main()
+
+int mainnnnn()
 {
     Tree tree;
     cin.get();
