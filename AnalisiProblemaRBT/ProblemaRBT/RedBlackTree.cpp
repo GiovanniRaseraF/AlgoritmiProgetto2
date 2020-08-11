@@ -8,10 +8,10 @@
 
 using namespace std;
 namespace RBT{
-    enum class color {
-        RED, BLACK, DOUBLE_BLACK
+    enum color {
+        RED, BLACK
     };
-    typedef enum color RBcolor;
+    typedef enum color Color;
     
 
     enum  class typeOfchild {
@@ -47,80 +47,52 @@ namespace RBT{
         node* father;
         node* left;
         node* right;
-        RBcolor color;
+        bool color;
 
         //Costruttore del nodo
-        node(int key, string val) {
+        node(int key, const string& val) {
             this->key = key;
             this->val = val;
             this->father = nullptr;
             this->left = nullptr;
             this->right = nullptr;
-            this->color = RBcolor::BLACK;
+            this->color = Color::BLACK;
         }
 
         ~node() {}
 
         //Funzioni statiche per la gestione
-        static node* create(int key, string val) {
+        static node* create(int key, const string& val) {
             return new node(key, val);
         }
 
-
-
-        /*
-         EFFETTO:		Cerca una certa chiave all'interno dell'albero
-         FUNZIONAMENTO:	key1 <= root < key2
-         DESCRIZIONE:	find k: trova nell'albero il nodo con chiave numerica k e restituisce il valore
-                         (di tipo stringa) associato a tale nodo (come sopra, si assuma che tale nodo esista)
-         */
-        static node* find(node* root, int key) {
-            node* iter = root;
-            //Ricerco il nodo
-            while (iter != nullptr && iter->key != key)
-                if (iter->key < key) iter = iter->right;
-                else iter = iter->left;
-
-            return iter;
-        }
-
-
-        /*
-        EFFETTO: Ritorna vero se l'elemento è presente
-        */
-        static bool contains(node* root, int key) {
-            if (node::find(root, key) == nullptr) return false;
-            return true;
-        }
-
-        static void loadToVector(node* root, vector<node*>& vet) {
-            if (root == nullptr) return;
-
-            vet.push_back(root);
-            loadToVector(root->left, vet);
-            loadToVector(root->right, vet);
-        }
-        
         /*
 		EFFETTO:		Elimita tutto l'albero compresa la root
 		FUNZIONAMENTO:	POSTORDER
 		DESCRIZIONE:	clear: rimuove tutti i nodi dall'albero, che diventer� quindi vuoto
 		*/
-		static node* clear(node *root) {
-            vector<node*> vet;
-            loadToVector(root, vet);
-            cout << endl << vet.size()<<endl;
-            for (node* i : vet)  cout<<i->key;
-            cout << endl;
-            for (node* i : vet)  delete i;
-            for (node* i : vet)  cout << i->key;
-            return nullptr;
-		}
+        static node* clear(node*& root) {
+            if (root == nullptr) return nullptr;
+            //Elimino la le foglie
+            if (root->left == nullptr && root->right == nullptr) {
+                delete root;
+                root = nullptr;
+                return nullptr;
+            }
+            else {
+                //Elimino ricorsivamente i figli
+                if (root->left != nullptr) root->left = clear(root->left);
+                if (root->right != nullptr) root->right = clear(root->right);
+                //Elimino la root
+                return clear(root);
+
+            }
+        }
 
         /*
         EFFETTO:        Trova il valore minimo nell'albero
         */
-        static node* min(node* root) {
+        static node* min(node*& root) {
             node* iter = root;
 
             //Trova il minimo andando a sinista
@@ -137,7 +109,7 @@ namespace RBT{
                         con chiave k di tipo intero e valore v di tipo stringa
                         (si assuma che l'albero non contenga già un nodo con chiave k)
         */
-        static node *insertBST(node* root, int key, string val) {
+        static node* insertBST(node*& root, int key, const string& val) {
             //Destra
             if (root->key < key)
                 if (root->right == nullptr) {
@@ -163,7 +135,7 @@ namespace RBT{
         /*
         EFFETTO:        Rotazione verso destra
         */
-        static node* rotateR(node* T, node* X) {
+        static node* rotateR(node*& T, node*& X) {
             node* fakeFather = create(0, "");
             //Controllo se sono nella root
             if (T == X) {
@@ -207,7 +179,7 @@ namespace RBT{
         /*
         EFFETTO:        Rotazione verso sinistra
         */
-        static node *rotateL(node *T, node* X) {
+        static node *rotateL(node*& T, node*& X) {
             node* fakeFather = create(0, "");
             //Controllo se sono nella root
             if (T == X) {
@@ -252,12 +224,12 @@ namespace RBT{
         /*
         EFFETTO:        Mi dice il colore di n, se n è una foglia di dice che è black
         */
-        static RBcolor getColor(node* n) { return (n == nullptr ? RBcolor::BLACK : n->color); }
+        static bool getColor(node* n) { return (n == nullptr ? Color::BLACK : n->color); }
 
         /*
         EFFETTO:        Mi dice se il n è la root oppure figlio destro o sinistro
         */
-        static typeChild childPosition(node *n) {
+        static typeChild childPosition(node*& n) {
             if (n->father == nullptr) return typeChild::ROOT;
             return (n->father->left == n) ? typeChild::LEFT : typeChild::RIGHT;
         }
@@ -265,7 +237,7 @@ namespace RBT{
         /*
         EFFETTO:        Ritorna lo zio di dell nodo scielto
         */
-        static node *uncle(node *n) {
+        static node* uncle(node*& n) {
             node *father = n->father;
             if (node::childPosition(father) == typeChild::LEFT)
                 return father->father->right;
@@ -276,7 +248,7 @@ namespace RBT{
         /*
         EFFETTO:        Ritorna il nonno del nodo
         */
-        static node* grandfather(node *n) {
+        static node* grandfather(node*& n) {
             return n->father->father;
         }
     
@@ -297,54 +269,32 @@ namespace RBT{
                         4 - Se x.parent è RED si usato rotazione e ricolorazione per sistemare il problema verso la radice
                         5 - In ogni istante può succedere solo che ho un RED con figlio RED
         */
-        static node *insert(node* root, int key, string val) {
-            enum typeCase {
-                FORTUNATO, QUASI_FORTUNATO, SFORTUNATO
-            };
-            typedef enum  typeCase typeCase;
-            //Solo per debug non viene utilizzata
-            //Nel momento di dover runnare il codice siccome
-            //é solo grafica
-            auto print = [](typeCase tc) {
-                switch (tc) {
-                case typeCase::FORTUNATO:
-                    cout << "FORTUNATO";
-                    break;
-                case typeCase::QUASI_FORTUNATO:
-                    cout << "QUASI_FORTUNATO";
-                    break;
-                case typeCase::SFORTUNATO:
-                    cout << "SFORTUNATO";
-                    break;
-                default:
-                    break;
-                }
-            };
-
+        static node *insert(node*& root, int key, const string& val) {
+        
             //Inserimento normale
             node *inserted = node::insertBST(root, key, val);
-            inserted->color = RBcolor::RED;
+            inserted->color = Color::RED;
             
             while (true) {
                 //Caso Base
-                if (node::getColor(inserted->father) == RBcolor::BLACK) return root;
+                if (node::getColor(inserted->father) == Color::BLACK) return root;
 
                 //Scegli caso
                 node* u = node::uncle(inserted);
                 node* g = node::grandfather(inserted);
                 node* p = inserted->father;
 
-                if (node::getColor(u) == RBcolor::BLACK && (node::childPosition(inserted) == node::childPosition(p))) {
+                if (node::getColor(u) == Color::BLACK && (node::childPosition(inserted) == node::childPosition(p))) {
                     if (node::childPosition(inserted) == typeChild::LEFT)
                         root = rotateR(root, g);
                     else
                         root = rotateL(root, g);
 
-                    p->color = RBcolor::BLACK;
-                    g->color = RBcolor::RED;
+                    p->color = Color::BLACK;
+                    g->color = Color::RED;
                     return root;
                 }
-                else if (node::getColor(u) == RBcolor::BLACK && (node::childPosition(inserted) != node::childPosition(p))) {
+                else if (node::getColor(u) == Color::BLACK && (node::childPosition(inserted) != node::childPosition(p))) {
                     if (node::childPosition(inserted) == typeChild::RIGHT) {
                         root = rotateL(root, p);
                         inserted = inserted->left;
@@ -355,11 +305,11 @@ namespace RBT{
                     }
                 }
                 else {
-                    p->color = RBcolor::BLACK;
-                    u->color = RBcolor::BLACK;
-                    g->color = RBcolor::RED;
+                    p->color = Color::BLACK;
+                    u->color = Color::BLACK;
+                    g->color = Color::RED;
                     inserted = g;
-                    if(root == inserted) g->color = RBcolor::BLACK;
+                    if(root == inserted) g->color = Color::BLACK;
                 }
             }
             return root;
@@ -392,17 +342,17 @@ namespace RBT{
         static bool check(node *root) {
             if (root == nullptr) return true;
             
-            RBcolor rootC = root->color;
+            bool rootC = root->color;
             bool res = true;
-            if (rootC == RBcolor::RED) {
+            if (rootC == Color::RED) {
                 //NON deve esserci red figlio di red
                 if (root->left != nullptr) {
-                    if (root->left->father == root && root->left->color == RBcolor::BLACK) res = true && check(root->left);
+                    if (root->left->father == root && root->left->color == Color::BLACK) res = true && check(root->left);
                     else return false;
                 }
 
                 if (root->right != nullptr) {
-                    if (root->right->father == root && root->right->color == RBcolor::BLACK) res =  true && check(root->right);
+                    if (root->right->father == root && root->right->color == Color::BLACK) res =  true && check(root->right);
                     else return false;
                 }
             }else{
@@ -423,25 +373,22 @@ namespace RBT{
 
 
     //Function Wrapper
-    class Tree : public Lambda{
-        public:
+    class Tree : public Lambda {
+    public:
         node* root;
 
-        Tree(){
+        Tree() {
             this->root = nullptr;
         }
-        void insert(int key, const string& val) override { 
-            if(root == nullptr)     root = node::create(key, val);
+
+        void insert(int key, const string& val) override {
+            if (root == nullptr)     root = node::create(key, val);
             else                    root = node::insert(root, key, val);
         }
 
         void clear() override {
-            this->root = RBT::node::clear(this->root);
-            
-        }
-
-        bool contains(int key) override {
-            return node::contains(this->root, key);
+            node::clear(this->root);
+            this->root = nullptr;
         }
     };
 }

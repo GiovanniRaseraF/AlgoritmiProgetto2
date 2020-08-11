@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <sstream>
 #include "Lambda.h"
+#include <vector>
 
 using namespace std;
 namespace BST{
@@ -162,6 +163,25 @@ namespace BST{
 			return root;
 		}
 
+		static void loadToVector(node* root, vector<node*>& vet) {
+			if (root == nullptr) return;
+
+			vet.push_back(root);
+			loadToVector(root->left, vet);
+			loadToVector(root->right, vet);
+		}
+
+		static node* del(node* root) {
+			vector<node*> vet;
+			loadToVector(root, vet);
+			cout << endl << vet.size() << endl;
+			//for (node* i : vet)  cout << i->key;
+			cout << endl;
+			for (node* i : vet)  delete i;
+			//for (node* i : vet)  cout << i->key;
+			return nullptr;
+		}
+
 	};
 
 	//Function Wrapper
@@ -179,8 +199,8 @@ namespace BST{
         }
 
         void clear() override {
-            node::clear(this->root);
-            this->root = nullptr;
+            node::del(this->root);
+            //this->root = nullptr;
         }
 
         bool contains(int key) override {

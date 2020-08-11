@@ -143,6 +143,7 @@
     <ClCompile Include="BinarySearchTree.cpp" />
     <ClCompile Include="Calcolatore.cpp" />
     <ClCompile Include="Prepara.cpp" />
+    <ClCompile Include="RBTree.cpp" />
     <ClCompile Include="RedBlackTree.cpp" />
   </ItemGroup>
   <ItemGroup>

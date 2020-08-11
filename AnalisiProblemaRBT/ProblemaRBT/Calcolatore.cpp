@@ -28,12 +28,12 @@ double* calcolatore(Lambda*& tree, double tMin, int numeroElementi, Prepara* vet
 
 
 
-int main() {
-	Lambda* avl = new RBT::Tree();
+int mainnnnnn() {
+	RBT::node* node = RBT::node::create(10, stringaSempre);
 	cin.get();
 	cout << "Sto caricando gli elementi..." << endl;
-	for (int i = 0; i < 50; i++) {
-		avl->insert(i, stringaSempre);
+	for (int i = 0; i < 4000000; i++) {
+		node = RBT::node::insert(node, i, stringaSempre);
 	}
 	cout << "Caricati" << endl;
 	
@@ -41,7 +41,7 @@ int main() {
 
 	//RBT::node::show(((RBT::Tree*)avl)->root);
 	cout << "\nSto eliminando gli elementi.." << endl;
-	avl->clear();
+	node = RBT::node::clear(node);
 	cout << "Eliminati"<<endl;
 	//RBT::node::show(((RBT::Tree*)avl)->root);
 
