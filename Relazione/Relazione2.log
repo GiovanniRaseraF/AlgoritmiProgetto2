@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  11 AUG 2020 16:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  11 AUG 2020 17:05
 entering extended mode
 **./Relazione2.tex
 (Relazione2.tex
@@ -256,85 +256,94 @@ File: Creatore1.png Graphic file (type png)
 Package pdftex.def Info: Creatore1.png  used on input line 37.
 (pdftex.def)             Requested size: 113.81102pt x 84.92702pt.
 
-[2 <./Attributi.png> <./Creatore1.png>]
-<CasoPeggioreBST.png, id=22, 863.47594pt x 237.13594pt>
+[2 <./Attributi.png> <./Creatore1.png>] [3]
+Underfull \hbox (badness 10000) in paragraph at lines 70--72
+
+ []
+
+<CasoPeggioreBST.png, id=25, 863.47594pt x 237.13594pt>
 File: CasoPeggioreBST.png Graphic file (type png)
 <use CasoPeggioreBST.png>
-Package pdftex.def Info: CasoPeggioreBST.png  used on input line 72.
-(pdftex.def)             Requested size: 341.43306pt x 93.76717pt.
- [3 <./CasoPeggioreBST.png>]
-<Enum.png, id=27, 165.31763pt x 268.6035pt>
+Package pdftex.def Info: CasoPeggioreBST.png  used on input line 74.
+(pdftex.def)             Requested size: 426.79134pt x 117.20715pt.
+
+Overfull \hbox (81.79134pt too wide) in paragraph at lines 74--75
+[][] 
+ []
+
+[4 <./CasoPeggioreBST.png>]
+<Enum.png, id=30, 165.31763pt x 268.6035pt>
 File: Enum.png Graphic file (type png)
 <use Enum.png>
-Package pdftex.def Info: Enum.png  used on input line 82.
+Package pdftex.def Info: Enum.png  used on input line 85.
 (pdftex.def)             Requested size: 85.35826pt x 138.69096pt.
- [4 <./Enum.png>]
-<Descrizione.jpg, id=32, 535.2497pt x 350.81062pt>
+ [5 <./Enum.png>]
+<Descrizione.jpg, id=35, 535.2497pt x 350.81062pt>
 File: Descrizione.jpg Graphic file (type jpg)
 <use Descrizione.jpg>
-Package pdftex.def Info: Descrizione.jpg  used on input line 113.
+Package pdftex.def Info: Descrizione.jpg  used on input line 116.
 (pdftex.def)             Requested size: 284.52756pt x 186.49078pt.
- [5 <./Descrizione.jpg>]
-<BST.png, id=36, 1253.43282pt x 386.94562pt>
+ [6 <./Descrizione.jpg>]
+<BST.png, id=39, 1253.43282pt x 386.94562pt>
 File: BST.png Graphic file (type png)
 <use BST.png>
-Package pdftex.def Info: BST.png  used on input line 118.
-(pdftex.def)             Requested size: 426.79134pt x 131.75461pt.
-<AVL.png, id=37, 1255.69125pt x 387.69844pt>
+Package pdftex.def Info: BST.png  used on input line 121.
+(pdftex.def)             Requested size: 369.88582pt x 114.1834pt.
+
+Overfull \hbox (24.88582pt too wide) in paragraph at lines 121--122
+[][] 
+ []
+
+<AVL.png, id=40, 1255.69125pt x 387.69844pt>
 File: AVL.png Graphic file (type png)
 <use AVL.png>
-Package pdftex.def Info: AVL.png  used on input line 119.
-(pdftex.def)             Requested size: 426.79134pt x 131.76839pt.
-<RBT.png, id=38, 1253.43282pt x 389.20406pt>
+Package pdftex.def Info: AVL.png  used on input line 123.
+(pdftex.def)             Requested size: 369.88582pt x 114.19849pt.
+
+Overfull \hbox (24.88582pt too wide) in paragraph at lines 123--124
+[][] 
+ []
+
+<RBT.png, id=41, 1253.43282pt x 389.20406pt>
 File: RBT.png Graphic file (type png)
 <use RBT.png>
-Package pdftex.def Info: RBT.png  used on input line 120.
-(pdftex.def)             Requested size: 426.79134pt x 132.5236pt.
+Package pdftex.def Info: RBT.png  used on input line 125.
+(pdftex.def)             Requested size: 369.88582pt x 114.84982pt.
 
-Overfull \hbox (81.79134pt too wide) in paragraph at lines 118--121
-[][]
+Overfull \hbox (24.88582pt too wide) in paragraph at lines 125--126
+[][] 
  []
 
-
-Overfull \hbox (81.79134pt too wide) in paragraph at lines 118--121
-[]
- []
-
-
-Overfull \hbox (81.79134pt too wide) in paragraph at lines 118--121
-[] 
- []
-
-[6 <./BST.png> <./AVL.png> <./RBT.png>]
-<ComaprazioneLIN.png, id=45, 956.82469pt x 449.42906pt>
+[7 <./BST.png> <./AVL.png> <./RBT.png>]
+<ComaprazioneLIN.png, id=49, 956.82469pt x 449.42906pt>
 File: ComaprazioneLIN.png Graphic file (type png)
 <use ComaprazioneLIN.png>
-Package pdftex.def Info: ComaprazioneLIN.png  used on input line 131.
+Package pdftex.def Info: ComaprazioneLIN.png  used on input line 138.
 (pdftex.def)             Requested size: 369.88582pt x 173.73363pt.
-<ComparazioneLOG.png, id=46, 956.82469pt x 448.67625pt>
+<ComparazioneLOG.png, id=50, 956.82469pt x 448.67625pt>
 File: ComparazioneLOG.png Graphic file (type png)
 <use ComparazioneLOG.png>
-Package pdftex.def Info: ComparazioneLOG.png  used on input line 132.
+Package pdftex.def Info: ComparazioneLOG.png  used on input line 139.
 (pdftex.def)             Requested size: 369.88582pt x 173.44263pt.
 
-Overfull \hbox (24.88582pt too wide) in paragraph at lines 131--133
+Overfull \hbox (24.88582pt too wide) in paragraph at lines 138--140
 [][]
  []
 
 
-Overfull \hbox (24.88582pt too wide) in paragraph at lines 131--133
+Overfull \hbox (24.88582pt too wide) in paragraph at lines 138--140
 [] 
  []
 
-[7 <./ComaprazioneLIN.png> <./ComparazioneLOG.png>] (Relazione2.aux) ) 
+[8 <./ComaprazioneLIN.png> <./ComparazioneLOG.png>] (Relazione2.aux) ) 
 Here is how much of TeX's memory you used:
  2850 strings out of 492484
  40053 string characters out of 3121149
- 116644 words of memory out of 3000000
+ 115644 words of memory out of 3000000
  7152 multiletter control sequences out of 15000+200000
  12452 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,6n,32p,798b,231s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,6n,32p,798b,233s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\User
 s\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.p
 k> <C:\Users\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600
@@ -346,9 +355,9 @@ iKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\Matteo\AppD
 ata\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/M
 atteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.p
 fb>
-Output written on Relazione2.pdf (7 pages, 729716 bytes).
+Output written on Relazione2.pdf (8 pages, 732212 bytes).
 PDF statistics:
- 302 PDF objects out of 1000 (max. 8388607)
+ 309 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  56 words of extra memory for PDF output out of 10000 (max. 10000000)
 

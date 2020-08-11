@@ -66,10 +66,13 @@
 				\item \textbf{la funzione valore di bilanciamento:} ritorna 0 se la root è null oppure sono perfettamente bilanciati, 1 se c'è più peso a sinistra oppure -1 se c'è più peso a destra;
 				\item \textbf{tutte le funzioni viste precedentemente sui BST};
 			\end{enumerate}
-			Di seguito vediamo un confronto tra BST e l'AVL. Il caso peggiore nei BST lo si ha quando vengono inseriti i numeri tra 1 ed n uno dopo l'altro, andando a creare un albero sbilanciato verso di un lato, formando quindi un unico "path". \\
-			L'AVL non è soggetto invece a questo problema, come dimostrato nel seguente grafico:
+		\newpage
+			Di seguito vediamo un confronto tra BST e AVL. Il caso peggiore nei BST lo si ha quando vengono inseriti i numeri tra 1 ed n uno dopo l'altro, andando a creare un albero sbilanciato verso di un lato, formando quindi un unico "path".\\
+			L'AVL non è soggetto invece a questo problema, come dimostrato nel seguente grafico.\\
+			 			
 			\begin{figure}[ht]
-				\includegraphics[width=12cm]{CasoPeggioreBST}
+				\includegraphics[width=15cm]{CasoPeggioreBST}
+				\caption{L'inserimento viene a costare quindi theta(n) a differenza di O(Logn) per gli AVL.}
 			\end{figure}
 			
 		\newpage
@@ -115,9 +118,12 @@
 		\newpage
 		Di seguito vengono illustrati singolarmente i tempi di esecuzione delle tre strutture dati, con annessa rappresentazione della \textit{standard deviation}, sia in scala \textit{lineare} che in scala \textit{logaritmica}.\\
 		\begin{figure}[ht]
-			\includegraphics[width=15cm]{BST}
-			\includegraphics[width=15cm]{AVL}
-			\includegraphics[width=15cm]{RBT}
+			\includegraphics[width=13cm]{BST}
+			\caption{In questo caso il BST risulta essere veloce siccome gli elementi randomici sono generati uniformemente}
+			\includegraphics[width=13cm]{AVL}
+			\caption{L'AVL ottiene sempre questo andamento, anche nel caso peggiore, in quanto l'altezza dell'albero risulta essere logaritmica}
+			\includegraphics[width=13cm]{RBT}
+			\caption{Grazie alla presenza dei colori e grazie alle operazioni di rotazione, questa struttura riesce ad essere la più performante in quanto un singolo inserimento costa O(logn)}
 		\end{figure}
 		
 		
@@ -126,7 +132,8 @@
 		Una volta ottenuti i grafici, possiamo fare un \textit{confronto tra i tempi di esecuzione} ottenuti con le tre strutture dati implementate.\\
 		Si nota fin da subito come la crescita dei tempi degli alberi \textbf{AVL} sia di gran lunga \textbf{superiore} rispetto a quella degli altri 2 già a partire dai primi inserimenti.\\
 		BST e RBT invece \textbf{sono pressoché identici fino ai 400000 nodi inseriti}, punto in cui gli \textbf{RBT diventano leggermente più veloci} rispetto ai BST. \\
-		Il tutto viene reso più esplicito dai grafici analizzati in scala doppiamente logaritmica.
+		Il tutto viene reso più esplicito dai grafici analizzati in scala doppiamente logaritmica.\\
+		Da tenere in considerazione che, qualora si ottenga il caso peggiore dei BST, esso risulta avere una complessità computazionale peggiore rispetto a quello delle altre strutture dati.
 		\begin{figure}[ht]
 			\includegraphics[width=13cm]{ComaprazioneLIN}
 			\includegraphics[width=13cm]{ComparazioneLOG}
