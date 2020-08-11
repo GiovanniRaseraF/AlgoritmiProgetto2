@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  11 AUG 2020 15:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  11 AUG 2020 16:35
 entering extended mode
 **./Relazione2.tex
 (Relazione2.tex
@@ -268,28 +268,76 @@ File: Enum.png Graphic file (type png)
 <use Enum.png>
 Package pdftex.def Info: Enum.png  used on input line 82.
 (pdftex.def)             Requested size: 85.35826pt x 138.69096pt.
- [4 <./Enum.png>] [5] (Relazione2.aux) ) 
+ [4 <./Enum.png>] [5]
+<BST.png, id=35, 1253.43282pt x 386.94562pt>
+File: BST.png Graphic file (type png)
+<use BST.png>
+Package pdftex.def Info: BST.png  used on input line 115.
+(pdftex.def)             Requested size: 284.52756pt x 87.83246pt.
+<AVL.png, id=36, 1255.69125pt x 387.69844pt>
+File: AVL.png Graphic file (type png)
+<use AVL.png>
+Package pdftex.def Info: AVL.png  used on input line 116.
+(pdftex.def)             Requested size: 284.52756pt x 87.84361pt.
+<RBT.png, id=37, 1253.43282pt x 389.20406pt>
+File: RBT.png Graphic file (type png)
+<use RBT.png>
+Package pdftex.def Info: RBT.png  used on input line 117.
+(pdftex.def)             Requested size: 284.52756pt x 88.34511pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--118
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--118
+[]
+ []
+
+[6 <./BST.png> <./AVL.png> <./RBT.png>]
+<ComaprazioneLIN.png, id=44, 956.82469pt x 449.42906pt>
+File: ComaprazioneLIN.png Graphic file (type png)
+<use ComaprazioneLIN.png>
+Package pdftex.def Info: ComaprazioneLIN.png  used on input line 128.
+(pdftex.def)             Requested size: 369.88582pt x 173.73363pt.
+<ComparazioneLOG.png, id=45, 956.82469pt x 448.67625pt>
+File: ComparazioneLOG.png Graphic file (type png)
+<use ComparazioneLOG.png>
+Package pdftex.def Info: ComparazioneLOG.png  used on input line 129.
+(pdftex.def)             Requested size: 369.88582pt x 173.44263pt.
+
+Overfull \hbox (24.88582pt too wide) in paragraph at lines 128--130
+[][]
+ []
+
+
+Overfull \hbox (24.88582pt too wide) in paragraph at lines 128--130
+[] 
+ []
+
+[7 <./ComaprazioneLIN.png> <./ComparazioneLOG.png>] (Relazione2.aux) ) 
 Here is how much of TeX's memory you used:
- 2807 strings out of 492484
- 39406 string characters out of 3121149
+ 2842 strings out of 492484
+ 39914 string characters out of 3121149
  116644 words of memory out of 3000000
- 7109 multiletter control sequences out of 15000+200000
+ 7144 multiletter control sequences out of 15000+200000
  12452 words of font info for 31 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,6n,32p,798b,231s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Matteo\AppData\Local\MiKTeX\
-2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.pk> <C:\Users\Matteo\AppData\Lo
-cal\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\Matteo
-\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1000.pk> <C:\U
-sers\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx144
-0.pk> <C:\Users\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi
-600\ecrm1000.pk> <C:\Users\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jkna
-ppen/ec/dpi600\ecrm1200.pk> <C:\Users\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/
-ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/Matteo/AppData/Local/Programs/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Relazione2.pdf (5 pages, 364045 bytes).
+ <C:\User
+s\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1000.p
+k> <C:\Users\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600
+\ecbx1200.pk> <C:\Users\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappe
+n/ec/dpi600\ecbx1000.pk> <C:\Users\Matteo\AppData\Local\MiKTeX\2.9\fonts/pk/ljf
+our/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\Matteo\AppData\Local\MiKTeX\2.9\f
+onts/pk/ljfour/jknappen/ec/dpi600\ecrm1000.pk> <C:\Users\Matteo\AppData\Local\M
+iKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\Matteo\AppD
+ata\Local\MiKTeX\2.9\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk><C:/Users/M
+atteo/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb>
+Output written on Relazione2.pdf (7 pages, 681971 bytes).
 PDF statistics:
- 267 PDF objects out of 1000 (max. 8388607)
+ 305 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

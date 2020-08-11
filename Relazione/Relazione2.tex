@@ -105,5 +105,28 @@
 		Infine abbiamo che il tempo ammortizzato di tutte le operazione eseguite è il risultato dato da il \textit{tempo totale impiegato per l'esecuzione delle operazioni diviso il parametro n}.\\
 		Abbiamo ottenuto quindi un tempo ammortizzato che ha un errore relativo che non supera mai 
 		\textbf{l'1\%}
+		
+		\subsection{Analisi algoritmo e grafici}
+		/...DESCRIZIONE ALGORITMO...\
+		
+		\newpage
+		Di seguito vengono illustrati singolarmente i tempi di esecuzione delle tre strutture dati, con annessa rappresentazione della \textit{standard deviation}, sia in scala \textit{lineare} che in scala \textit{logaritmica}.\\
+		\begin{figure}[ht]
+			\includegraphics[width=10cm]{BST}
+			\includegraphics[width=10cm]{AVL}
+			\includegraphics[width=10cm]{RBT}
+		\end{figure}
+		
+		
+		\newpage
+		\subsection{Confronto finale tra le strutture}
+		Una volta ottenuti i grafici, possiamo fare un \textit{confronto tra i tempi di esecuzione} ottenuti con le tre strutture dati implementate.\\
+		Si nota fin da subito come la crescita dei tempi degli alberi \textbf{AVL} sia di gran lunga \textbf{superiore} rispetto a quella degli altri 2 già a partire dai primi inserimenti.\\
+		BST e RBT invece \textbf{sono pressoché identici fino ai 400000 nodi inseriti}, punto in cui gli \textbf{RBT diventano leggermente più veloci} rispetto ai BST. \\
+		Il tutto viene reso più esplicito dai grafici analizzati in scala doppiamente logaritmica.
+		\begin{figure}[ht]
+			\includegraphics[width=13cm]{ComaprazioneLIN}
+			\includegraphics[width=13cm]{ComparazioneLOG}
+		\end{figure}
 	
 \end{document}

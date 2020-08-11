@@ -7,3 +7,5 @@
 \contentsline {section}{\numberline {3}Alberi binari di ricerca di tipo Red-Black}{4}%
 \contentsline {subsection}{\numberline {3.1}Introduzione}{4}%
 \contentsline {section}{\numberline {4}Algortimo per il calcolo dei tempi}{5}%
+\contentsline {subsection}{\numberline {4.1}Analisi algoritmo e grafici}{5}%
+\contentsline {subsection}{\numberline {4.2}Confronto finale tra le strutture}{7}%
