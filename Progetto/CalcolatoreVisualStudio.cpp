@@ -101,7 +101,7 @@ double* calcolatore(Lambda*& tree, double tMin, int numeroElementi, Prepara* vet
 
 	//Calcolo del tempo ammortizzato
 	double tempoAmmortizzato = (double)totalTime / numeroIterazioni;
-	double deviazione = calcolaDeviazione(tempMem, tempoAmmortizzato, numeroElementi);
+	double deviazione = calcolaDeviazione(tempMem, tempoAmmortizzato, numeroIterazioni);
 	return new double[2]{tempoAmmortizzato, deviazione};
 }
 
