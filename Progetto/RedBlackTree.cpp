@@ -26,6 +26,24 @@ namespace RBT {
         ~node() {}
     };
 
+    /*
+    *  SPECIFICA:  Un RBT è un BST in cui ogni nodo x ha un'informazione
+                    aggiuntiva x.color e devono valere:
+                        1 - Il colore deve essere R o B
+                        2 - Ogni figlio NULL è B
+                        3 - Ogni nodo R ha figli B
+                        4 - In ogni nodo x, il numero di nodi B nel cammino x-foglia è sempre lo stesso
+                        5 - La radice è B
+
+    * PROPRIETA':  - Se sciendo nei nodi non è detto che l'altezzanera cali
+                    - Per ogni nodo x il piu lungo cammino x-foglia è lungo al massimo 2 * BH(x) quindi H(x) <= 2 * BH(x)
+                    - Togliando tutti i nodi rossi, resta almeno un albero binario completo di BH(T) fatto solo da nodi neri 
+                        -> Quindi N > 2^(BH(t)) - 1
+                        -> (  H(T) <= 2 * BH(T)  &&   N > 2^(BH(T)) - 1)      ->        BH(T) >= H(T) / 2
+                        -> H(T) <= 2 * log2(N + 1)
+
+    * TEOREMI:     - Se T è un RBT allora H = Teta(lg(N))
+    */
 
     class TreeRBT  {
     public:
@@ -39,7 +57,13 @@ namespace RBT {
     };
 
 
-
+     /*
+    EFFETTO:		Inserisce un nuovo nodo
+    FUNZIONAMENTO:	key1 <= root < key2
+    DESCRIZIONE:	insert k v: inserisce un nuovo nodo nell'albero binario di ricerca,
+                    con chiave k di tipo intero e valore v di tipo stringa
+                    (si assuma che l'albero non contenga già un nodo con chiave k)
+    */
     node* insertBST(node* root, node* puntatore) {
         if (root == nullptr) return puntatore;
         if (puntatore->key < root->key) {
@@ -53,8 +77,11 @@ namespace RBT {
         return root;
     }
 
+    //Operazioni Importanti
 
-
+    /*
+    EFFETTO:        Rotazione verso sinistra
+    */
     void TreeRBT::rotateL(node*& root, node*& puntatore) {
         node* fakeR = puntatore->right;
         puntatore->right = fakeR->left;
@@ -71,6 +98,9 @@ namespace RBT {
         puntatore->father = fakeR;
     }
 
+    /*
+    EFFETTO:        Rotazione verso destra
+    */
     void TreeRBT::rotateR(node*& root, node*& puntatore) {
         node* fakeL = puntatore->left;
         puntatore->left = fakeL->right;
@@ -87,109 +117,77 @@ namespace RBT {
         puntatore->father = fakeL;
     }
 
+    /*
+    EFFETTO:        Inserisce un nuovo nodo
+    FUNZIONAMENTO:  1 - La chiave k è in un nodo x che ha due figli null
+                    2 - Inserisco x in T utilizzando le procedure dei BST
+                    3 - Si colora di RED cosi sicuramente le altezze nere sono corrette
+                    4 - Se x.parent è RED si usato rotazione e ricolorazione per sistemare il problema verso la radice
+                    5 - In ogni istante può succedere solo che ho un RED con figlio RED
+    */
     void TreeRBT::insertFix(node*& root, node*& pt) {
-        node* parent_pt = nullptr;
-        node* grand_parent_pt = nullptr;
+        node* fakeFather = nullptr;
+        node* fakeGrandFather = nullptr;
 
-        while ((pt != root) && (pt->color != BLACK) && (pt->father->color == RED))
-        {
-
-            parent_pt = pt->father;
-            grand_parent_pt = pt->father->father;
-
-            /*  Case : A
-                Parent of pt is left child of Grand-parent of pt */
-            if (parent_pt == grand_parent_pt->left)
-            {
-
-                node* uncle_pt = grand_parent_pt->right;
-
-                /* Case : 1
-                   The uncle of pt is also red
-                   Only Recoloring required */
-                if (uncle_pt != nullptr && uncle_pt->color == RED)
-                {
-                    grand_parent_pt->color = RED;
-                    parent_pt->color = BLACK;
+        while ((pt != root) && (pt->color != BLACK) && (pt->father->color == RED)){
+            fakeFather = pt->father;
+            fakeGrandFather = pt->father->father;
+            //Caso uno
+            if (fakeFather == fakeGrandFather->left){
+                node* uncle_pt = fakeGrandFather->right;
+                if (uncle_pt != nullptr && uncle_pt->color == RED){
+                    fakeGrandFather->color = RED;
+                    fakeFather->color = BLACK;
                     uncle_pt->color = BLACK;
-                    pt = grand_parent_pt;
-                }
-
-                else
-                {
-                    /* Case : 2
-                       pt is right child of its parent
-                       Left-rotation required */
-                    if (pt == parent_pt->right)
-                    {
-                        rotateL(root, parent_pt);
-                        pt = parent_pt;
-                        parent_pt = pt->father;
+                    pt = fakeGrandFather;
+                }else{
+                    if (pt == fakeFather->right){
+                        rotateL(root, fakeFather);
+                        pt = fakeFather;
+                        fakeFather = pt->father;
                     }
-
-                    /* Case : 3
-                       pt is left child of its parent
-                       Right-rotation required */
-                    rotateR(root, grand_parent_pt);
-                    swap(parent_pt->color, grand_parent_pt->color);
-                    pt = parent_pt;
+                    rotateR(root, fakeGrandFather);
+                    swap(fakeFather->color, fakeGrandFather->color);
+                    pt = fakeFather;
                 }
-            }
-
-            /* Case : B
-               Parent of pt is right child of Grand-parent of pt */
-            else
-            {
-                node* uncle_pt = grand_parent_pt->left;
-
-                /*  Case : 1
-                    The uncle of pt is also red
-                    Only Recoloring required */
-                if ((uncle_pt != nullptr) && (uncle_pt->color == RED))
-                {
-                    grand_parent_pt->color = RED;
-                    parent_pt->color = BLACK;
+            //Caso due
+            }else{
+                node* uncle_pt = fakeGrandFather->left;
+                if ((uncle_pt != nullptr) && (uncle_pt->color == RED)){
+                    fakeGrandFather->color = RED;
+                    fakeFather->color = BLACK;
                     uncle_pt->color = BLACK;
-                    pt = grand_parent_pt;
-                }
-                else
-                {
-                    /* Case : 2
-                       pt is left child of its parent
-                       Right-rotation required */
-                    if (pt == parent_pt->left)
-                    {
-                        rotateR(root, parent_pt);
-                        pt = parent_pt;
-                        parent_pt = pt->father;
+                    pt = fakeGrandFather;
+                }else{
+                    if (pt == fakeFather->left){
+                        rotateR(root, fakeFather);
+                        pt = fakeFather;
+                        fakeFather = pt->father;
                     }
-
-                    /* Case : 3
-                       pt is right child of its parent
-                       Left-rotation required */
-                    rotateL(root, grand_parent_pt);
-                    swap(parent_pt->color, grand_parent_pt->color);
-                    pt = parent_pt;
+                    rotateL(root, fakeGrandFather);
+                    swap(fakeFather->color, fakeGrandFather->color);
+                    pt = fakeFather;
                 }
             }
         }
-
         root->color = BLACK;
     }
 
-    // Function to insert a new node with given data 
+    /*
+    EFFETTO: Inserisce un elemento nell'albero
+    */
     void TreeRBT::insert(const int& key, const string& val) {
         node* pt = new node(key, val);
-
-        // Do a normal BST insert 
-        root = insertBST(root, pt);
-
-        // fix Red Black Tree violations 
+        root = insertBST(root, pt);s 
         insertFix(root, pt);
-
     }
 
 
+     /*
+    EFFETTO:        Elimita tutto l'albero compresa la root
+    FUNZIONAMENTO:  POSTORDER
+    DESCRIZIONE:    clear: rimuove tutti i nodi dall'albero, che diventer quindi vuoto
+    */
     static node* clear(node* root) {
         if (root == nullptr) return nullptr;
         //Elimino la le foglie
@@ -208,11 +206,11 @@ namespace RBT {
     }
 
     /*
-            EFFETTO:		Cerca una certa chiave all'interno dell'albero
-            FUNZIONAMENTO:	key1 <= root < key2
-            DESCRIZIONE:	find k: trova nell'albero il nodo con chiave numerica k e restituisce il valore
-                            (di tipo stringa) associato a tale nodo (come sopra, si assuma che tale nodo esista)
-            */
+    EFFETTO:		Cerca una certa chiave all'interno dell'albero
+    FUNZIONAMENTO:	key1 <= root < key2
+    DESCRIZIONE:	find k: trova nell'albero il nodo con chiave numerica k e restituisce il valore
+                    (di tipo stringa) associato a tale nodo (come sopra, si assuma che tale nodo esista)
+    */
     static node* find(node*& root, int key) {
         node* iter = root;
         //Ricerco il nodo
@@ -224,8 +222,8 @@ namespace RBT {
     }
 
     /*
-      EFFETTO: Ritorna vero se l'elemento è presente
-      */
+    EFFETTO: Ritorna vero se l'elemento è presente
+    */
     static bool contains(node*& root, int key) {
         if (RBT::find(root, key) == nullptr) return false;
         return true;
@@ -269,10 +267,10 @@ namespace RBT {
     }
 
     /*
-          EFFETTO:        esegue una visita nell'albero
-          FUNZIONAMENTO:  PREORDER
-          DESCRIZIONE:    show: visualizza l'albero corrente
-          */
+    EFFETTO:        esegue una visita nell'albero
+    FUNZIONAMENTO:  PREORDER
+    DESCRIZIONE:    show: visualizza l'albero corrente
+    */
     static void show(node* root) {
         if (root == nullptr)            cout << "NULL ";
         else {
@@ -354,34 +352,3 @@ int main() {
     }
     return 0;
 }
-
-
-
-// Driver Code 
-
-int mainnnnn()
-{
-    Tree tree;
-    cin.get();
-    cout << "Sto caricando gli elementi..." << endl;
-    for (int i = 0; i < 10000000; i++) tree.insert(i, "");
-    cout << "Caricati" << endl;
-
-    cin.get();
-
-    cout<<endl<<check(tree.root);
-    //RBT::node::show(((RBT::Tree*)avl)->root);
-    cout << "\nSto eliminando gli elementi.." << endl;
-    tree.root = clear(tree.root);
-
-    cout << "Eliminati" << endl;
-    //RBT::node::show(((RBT::Tree*)avl)->root);
-
-    cin.get();
-    cin.get();
-
-    
-
-    return 0;
-}
-*/
