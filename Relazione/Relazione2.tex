@@ -46,8 +46,7 @@
 		    		\item \textbf{la funzione remove:} elimina il nodo cercato sistemando poi i suoi figli, qualora essi esistano;
 		    	\end{enumerate}
 		 \newpage
-		 	\subsection{Analisi e calcolo tempi}
-	   	 \newpage
+		 
 		\section{Alberi binari di ricerca di tipo AVL}
 			\subsection{Introduzione}
 			La seconda struttura dati che analizziamo è quella degli alberi creati da \textit{Adelson-Velsky and Landis (AVL tree)}.\\
@@ -67,6 +66,11 @@
 				\item \textbf{la funzione valore di bilanciamento:} ritorna 0 se la root è null oppure sono perfettamente bilanciati, 1 se c'è più peso a sinistra oppure -1 se c'è più peso a destra;
 				\item \textbf{tutte le funzioni viste precedentemente sui BST};
 			\end{enumerate}
+			Di seguito vediamo un confronto tra BST e l'AVL. Il caso peggiore nei BST lo si ha quando vengono inseriti i numeri tra 1 ed n uno dopo l'altro, andando a creare un albero sbilanciato verso di un lato, formando quindi un unico "path". \\
+			L'AVL non è soggetto invece a questo problema, come dimostrato nel seguente grafico:
+			\begin{figure}[ht]
+				\includegraphics[width=12cm]{CasoPeggioreBST}
+			\end{figure}
 			
 		\newpage
 		
@@ -88,8 +92,6 @@
 				\item \textbf{check:} ritorna true qualora l'RBT abbia tutti i puntatori giusti, colori giusti e black-height corretta;
 			\end{itemize}
 			
-			\newpage
-			\subsection{Analisi e calcolo tempi}
 			\newpage
 		\section{Algortimo per il calcolo dei tempi}
 		Viene eseguita una stima dei tempi medi e \textbf{ammortizzati} per l'esecuzione di \textbf{n} operazioni, sia di inserimento che di ricerca, nelle tre strutture dati viste precedentemente. \\
