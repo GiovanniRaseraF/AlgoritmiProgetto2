@@ -31,7 +31,7 @@ int main() {
 	//Calcolo la granularit�
 	long risoluzione = getRobustResolution();
 	double erroreMassimo = 0.01;					//1%
-	double tMin = risoluzione / erroreMassimo + risoluzione;
+	double tMin = risoluzione / erroreMassimo + risoluzione; //= r/eM + r
 
 	//Lambda
 	Prepara* vettore = new Prepara(MAX_VAL);
@@ -58,7 +58,7 @@ int main() {
 		//BST AVL RBT
 		double* BSTres = calcolatore(bst, tMin, numeroElementi, vettore);
 		double* AVLres = calcolatore(avl, tMin, numeroElementi, vettore);
-		double* RBTres = calcolatore(rbt, tMin, numeroElementi, vettore);//new double[2]{0,0};
+		double* RBTres = calcolatore(rbt, tMin, numeroElementi, vettore);
 
 		double tBST = BSTres[0], dBST = BSTres[1];
 		double tAVL = AVLres[0], dAVL = AVLres[1];
@@ -86,22 +86,23 @@ EFFETTO: Ritorna il valore del tempo ammortizzato e la deviazione
 double* calcolatore(Lambda*& tree, double tMin, int numeroElementi, Prepara* vettore){
 	int numeroIterazioni = 50;
 	long totalTime = 0;
-		vector<double> tempMem;
-		for (int iter = 0; iter < numeroIterazioni; iter++) {
-			//Pulizia dell'albero
-			tree->clear();
-			//Conto il tempo che ci metto a fare gli iserimenti
-			double start = inserimento(tree, tMin, numeroElementi, vettore);
-			//Somma dei tempo
-			totalTime += start;
-			//Salvataggio del tempo per calcolo della varianza
-			tempMem.push_back(start);
-		}
+	vector<double> tempMem;
 
-		//Calcolo del tempo ammortizzato
-		double tempoAmmortizzato = (double)totalTime / numeroIterazioni;
-		double deviazione = calcolaDeviazione(tempMem, tempoAmmortizzato, numeroElementi);
-		return new double[2]{tempoAmmortizzato, deviazione};
+	for (int iter = 0; iter < numeroIterazioni; iter++) {
+		//Pulizia dell'albero
+		tree->clear();
+		//Conto il tempo che ci metto a fare gli iserimenti
+		double start = inserimento(tree, tMin, numeroElementi, vettore);
+		//Somma dei tempo
+		totalTime += start;
+		//Salvataggio del tempo per calcolo della varianza
+		tempMem.push_back(start);
+	}
+
+	//Calcolo del tempo ammortizzato
+	double tempoAmmortizzato = (double)totalTime / numeroIterazioni;
+	double deviazione = calcolaDeviazione(tempMem, tempoAmmortizzato, numeroElementi);
+	return new double[2]{tempoAmmortizzato, deviazione};
 }
 
 /*
@@ -127,7 +128,7 @@ double inserimento(Lambda*& tree, double tMin, int numeroElementi, Prepara* vett
 }
 
 
-
+//RISOLUZIONE
 long getDuration(steady_clock::time_point start, steady_clock::time_point end) {
 	return duration_cast<nanosecondi>(end - start).count();
 }
