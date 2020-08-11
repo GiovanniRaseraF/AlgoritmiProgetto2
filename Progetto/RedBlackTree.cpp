@@ -178,7 +178,7 @@ namespace RBT {
     */
     void TreeRBT::insert(const int& key, const string& val) {
         node* pt = new node(key, val);
-        root = insertBST(root, pt);s 
+        root = insertBST(root, pt);
         insertFix(root, pt);
     }
 
@@ -306,10 +306,9 @@ namespace RBT {
     
 
 /*
-
 int main() {
     //Inizializzazione della BST
-    Tree bst;
+    TreeRBT bst;
 
     //LOOP DELLE OPZIONI
     bool finito = false;
@@ -352,3 +351,4 @@ int main() {
     }
     return 0;
 }
+*/
